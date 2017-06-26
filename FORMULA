@@ -1,0 +1,8 @@
+name: intelliJ
+os: RedHat, Debian, Ubuntu, Suse, FreeBSD
+os_family: RedHat, Debian, Suse, FreeBSD
+version: 201706
+release: 1
+minimum_version: 2017.6
+summary: Formula for installing intelliJ
+description: Formula for installing Intellij IDEA for Java developers
