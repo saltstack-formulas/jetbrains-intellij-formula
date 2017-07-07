@@ -25,7 +25,7 @@
 {%- if source_url == default_source_url %}
   {%- set source_hash        = default_source_hash %}
 {%- else %}
-  {%- set source_hash        = g.get('source_hash', p.get('source_hash', '')) %}
+  {%- set source_hash        = g.get('source_hash', p.get('source_hash', default_source_hash )) %}
 {%- endif %}
 
 {%- set dl_opts		     = g.get('dl_opts', p.get('dl_opts', default_dl_opts)) %}
