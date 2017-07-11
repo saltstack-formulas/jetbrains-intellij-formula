@@ -10,7 +10,7 @@ intellij-config:
     - user: root
     - group: root
     - context:
-      intellij.home: {{ intellij.intellij_home }}
+      intellij_home: {{ intellij.intellij_home }}
 
 # Add intelli-jhome to alternatives system
 intellij-home-alt-install:
