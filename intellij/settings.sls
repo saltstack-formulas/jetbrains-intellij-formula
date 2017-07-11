@@ -11,7 +11,7 @@
 {%- set default_prefix       = '/usr/share/java' %}
 {%- set default_source_url   = mirror1 + 'ideaIC-20' + year + '.' + release + '-no-jdk.tar.gz' %}
 {%- set default_source_hash  = mirror2 + 'ideaIC-20' + year + '.' + release + '-no-jdk.tar.gz' + '.sha256' %}
-{%- set default_dl_opts      = '-s ' %}
+{%- set default_dl_opts      = ' -s ' %}
 
 {%- set prefix		     = g.get('prefix', p.get('prefix', default_prefix )) %}
 {%- set intellij_real_home   = prefix + '/idea-IC-' + year + release %}
