@@ -8,6 +8,6 @@ intellij:
   archive_type: tar
   dl_opts: 
   intellij_real_home: /usr/share/java/idea-IC-17.1.4
-  unpack_opts: z -C /usr/share/java/idea-IC-17-1.4 --strip-components=1
+  unpack_opts: -z -C /usr/share/java/idea-IC-17-1.4 --strip-components=1
   intellij_symlink: /usr/bin/idea.sh
   intellij_realcmd: /opt/intellij/bin/idea.sh

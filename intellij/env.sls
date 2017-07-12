@@ -4,13 +4,13 @@
 intellij-config:
   file.managed:
     - name: /etc/profile.d/intellij.sh
-    - source: salt://intellij/intellij.sh
+    - source: salt://intellij/files/intellij.sh
     - template: jinja
     - mode: 644
     - user: root
     - group: root
     - context:
-      intellij.home: {{ intellij.intellij_home }}
+      intellij_home: {{ intellij.intellij_home }}
 
 # Add intelli-jhome to alternatives system
 intellij-home-alt-install:
