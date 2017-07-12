@@ -14,6 +14,12 @@ intellij-install-dir:
     - mode: 755
     - makedirs: True
 
+# curl fails (rc=23) if file exists
+{{ archive_file }}:
+  file.absent:
+    - require_in:
+      - intellij-download-archive
+
 intellij-download-archive:
   cmd.run:
     - name: curl {{ intellij.dl_opts }} -o '{{ archive_file }}' '{{ intellij.source_url }}'
@@ -57,6 +63,16 @@ intellij-update-home-symlink:
     - force: True
     - require:
       - intellij-unpack-archive
+      - intellij-desktop-entry
+
+#### Example requiring 'user' definition in pillar ##
+intellij-desktop-entry:
+  file.managed:
+    - source: salt://intellij/files/intellij.desktop
+    - name: /home/{{ pillar['user'] }}/Desktop/intellij.desktop
+    - user: {{ pillar['user'] }}
+    - group: {{ pillar['user'] }}
+    - mode: 755
 
 intellij-remove-archive:
   file.absent:
