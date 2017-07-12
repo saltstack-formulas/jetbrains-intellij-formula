@@ -4,7 +4,7 @@
 intellij-config:
   file.managed:
     - name: /etc/profile.d/intellij.sh
-    - source: salt://intellij/intellij.sh
+    - source: salt://intellij/files/intellij.sh
     - template: jinja
     - mode: 644
     - user: root
