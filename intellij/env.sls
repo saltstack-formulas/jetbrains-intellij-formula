@@ -12,16 +12,13 @@ intellij-config:
     - context:
       intellij_home: {{ intellij.intellij_home }}
 
-# Add intelli-jhome to alternatives system
+# Add intelliJhome to alternatives system
 intellij-home-alt-install:
   alternatives.install:
     - name: intellij-home
     - link: {{ intellij.intellij_home }}
     - path: {{ intellij.intellij_real_home }}
-    - priority: 30
-    - require:
-      - intellij-unpack-archive
-      - intellij-update-home-symlink
+    - priority: {{ intellij.alt_priority }}
 
 intellij-home-alt-set:
   alternatives.set:
@@ -36,10 +33,8 @@ intellij-alt-install:
     - name: intellij
     - link: {{ intellij.intellij_symlink }}
     - path: {{ intellij.intellij_realcmd }}
-    - priority: 30
-    - onlyif: test -d {{ intellij.intellij_real_home }} && test -L {{ intellij.intellij_home }}
+    - priority: {{ intellij.alt_priority }}
     - require:
-      - intellij-home-alt-install
       - intellij-home-alt-set
 
 intellij-alt-set:
@@ -47,12 +42,5 @@ intellij-alt-set:
     - name: intellij
     - path: {{ intellij.intellij_realcmd }}
     - require:
-      - intellij-home-alt-install
       - intellij-alt-install
-
-# source PATH with JAVA_HOME
-intellij-source-file:
-  cmd.run:
-    - name: source /etc/profile
-    - cwd: /root
 
