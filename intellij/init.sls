@@ -15,6 +15,7 @@ intellij-install-dir:
     - makedirs: True
 
 # curl fails (rc=23) if file exists
+# and test -f cannot detect corrupt archive
 {{ archive_file }}:
   file.absent:
     - require_in:
@@ -23,7 +24,6 @@ intellij-install-dir:
 intellij-download-archive:
   cmd.run:
     - name: curl {{ intellij.dl_opts }} -o '{{ archive_file }}' '{{ intellij.source_url }}'
-    - unless: test -f '{{ archive_file }}'
     - unless: test -d '{{ intellij.intellij_realcmd }}'
     - require:
       - intellij-install-dir
@@ -35,7 +35,6 @@ intellij-unpacked-dir:
     - group: root
     - mode: 755
     - makedirs: True
-    - ifexists: {{ archive_file }}
     - require:
       - intellij-download-archive
 
@@ -53,7 +52,6 @@ intellij-unpack-archive:
     - user: root
     - group: root
     - require:
-      - intellij-download-archive
       - intellij-unpacked-dir
 
 intellij-update-home-symlink:
@@ -63,9 +61,7 @@ intellij-update-home-symlink:
     - force: True
     - require:
       - intellij-unpack-archive
-      - intellij-desktop-entry
 
-#### Example requiring 'user' definition in pillar ##
 intellij-desktop-entry:
   file.managed:
     - source: salt://intellij/files/intellij.desktop
@@ -73,22 +69,21 @@ intellij-desktop-entry:
     - user: {{ pillar['user'] }}
     - group: {{ pillar['user'] }}
     - mode: 755
+    - require:
+      - intellij-unpack-archive
 
 intellij-remove-archive:
   file.absent:
     - name: {{ archive_file }}
     - require:
-      - intellij-update-home-symlink
+      - intellij-unpack-archive
 
 {%- if intellij.source_hash %}
 intellij-remove-archive-hashfile:
   file.absent:
     - name: {{ archive_file }}.sha256
     - require:
-      - intellij-update-home-symlink
+      - intellij-unpack-archive
 {%- endif %}
-
-include:
-- .env
 
 {%- endif %}
