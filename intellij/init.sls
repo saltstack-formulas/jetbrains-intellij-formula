@@ -49,10 +49,9 @@ intellij-unpack-archive:
     - options: {{ intellij.unpack_opts }}
     - enforce_toplevel: False
     - clean: True
-    - unless: test -f '{{ intellij.intellij_realcmd }}'
     - user: root
     - group: root
-    - require:
+    - onchanges:
       - intellij-unpacked-dir
 
 intellij-update-home-symlink:
