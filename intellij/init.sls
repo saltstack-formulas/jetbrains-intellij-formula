@@ -24,7 +24,7 @@ intellij-install-dir:
 intellij-download-archive:
   cmd.run:
     - name: curl {{ intellij.dl_opts }} -o '{{ archive_file }}' '{{ intellij.source_url }}'
-    - unless: test -d '{{ intellij.intellij_realcmd }}'
+    - unless: test -f '{{ intellij.intellij_realcmd }}'
     - require:
       - intellij-install-dir
 
