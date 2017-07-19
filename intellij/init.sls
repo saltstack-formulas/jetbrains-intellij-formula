@@ -51,7 +51,7 @@ intellij-unpack-archive:
     - clean: True
     - user: root
     - group: root
-    - require:
+    - onchanges:
       - intellij-unpacked-dir
 
 intellij-update-home-symlink:
@@ -69,6 +69,7 @@ intellij-desktop-entry:
     - user: {{ pillar['user'] }}
     - group: {{ pillar['user'] }}
     - mode: 755
+    - force: True
     - require:
       - intellij-unpack-archive
 
