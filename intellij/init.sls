@@ -67,7 +67,11 @@ intellij-desktop-entry:
     - source: salt://intellij/files/intellij.desktop
     - name: /home/{{ pillar['user'] }}/Desktop/intellij.desktop
     - user: {{ pillar['user'] }}
+{% if salt['grains.get']('os_family') == 'Suse' %}
+    - group: users
+{% else %}
     - group: {{ pillar['user'] }}
+{% endif %}
     - mode: 755
     - force: True
     - require:
