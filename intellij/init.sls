@@ -19,14 +19,14 @@ intellij-install-dir:
 {{ archive_file }}:
   file.absent:
     - require_in:
-      - intellij-download-archive
+      - cmd: intellij-download-archive
 
 intellij-download-archive:
   cmd.run:
     - name: curl {{ intellij.dl_opts }} -o '{{ archive_file }}' '{{ intellij.source_url }}'
     - unless: test -f '{{ intellij.intellij_realcmd }}'
     - require:
-      - intellij-install-dir
+      - file: intellij-install-dir
 
 intellij-unpacked-dir:
   file.directory:
@@ -35,8 +35,9 @@ intellij-unpacked-dir:
     - group: root
     - mode: 755
     - makedirs: True
+    - force: True
     - require:
-      - intellij-download-archive
+      - cmd: intellij-download-archive
 
 intellij-unpack-archive:
   archive.extracted:
@@ -46,13 +47,15 @@ intellij-unpack-archive:
     - source_hash: {{ intellij.source_hash }}
     {%- endif %}
     - archive_format: {{ intellij.archive_type }}
+  {% if grains['saltversioninfo'] < [2016, 11, 0] %}
+    - tar_options: {{ intellij.unpack_opts }}
+    - if_missing: {{ intellij.intellij_realcmd }}
+  {% else %}
     - options: {{ intellij.unpack_opts }}
+  {% endif %}
     - enforce_toplevel: False
-    - clean: True
-    - user: root
-    - group: root
     - onchanges:
-      - intellij-unpacked-dir
+      - file: intellij-unpacked-dir
 
 intellij-update-home-symlink:
   file.symlink:
@@ -60,14 +63,14 @@ intellij-update-home-symlink:
     - target: {{ intellij.intellij_real_home }}
     - force: True
     - require:
-      - intellij-unpack-archive
+      - archive: intellij-unpack-archive
 
 intellij-desktop-entry:
   file.managed:
     - source: salt://intellij/files/intellij.desktop
     - name: /home/{{ pillar['user'] }}/Desktop/intellij.desktop
     - user: {{ pillar['user'] }}
-{% if salt['grains.get']('os_family') == 'Suse' %}
+{% if salt['grains.get']('os_family') == 'Suse' or salt['grains.get']('os') == 'SUSE' %}
     - group: users
 {% else %}
     - group: {{ pillar['user'] }}
@@ -75,20 +78,20 @@ intellij-desktop-entry:
     - mode: 755
     - force: True
     - require:
-      - intellij-unpack-archive
+      - archive: intellij-unpack-archive
 
 intellij-remove-archive:
   file.absent:
     - name: {{ archive_file }}
     - require:
-      - intellij-unpack-archive
+      - archive: intellij-unpack-archive
 
 {%- if intellij.source_hash %}
 intellij-remove-archive-hashfile:
   file.absent:
     - name: {{ archive_file }}.sha256
     - require:
-      - intellij-unpack-archive
+      - archive: intellij-unpack-archive
 {%- endif %}
 
 {%- endif %}
