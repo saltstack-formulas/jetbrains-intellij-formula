@@ -53,7 +53,9 @@ intellij-unpack-archive:
   {% else %}
     - options: {{ intellij.unpack_opts }}
   {% endif %}
+  {% if grains['saltversioninfo'] >= [2016, 11, 0] %}
     - enforce_toplevel: False
+  {% endif %}
     - require:
       - cmd: intellij-download-archive
 
