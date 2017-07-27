@@ -27,7 +27,7 @@ intellij-download-archive:
     - name: curl {{ intellij.dl_opts }} -o '{{ archive_file }}' '{{ intellij.source_url }}'
     - unless: test -f '{{ intellij.intellij_realcmd }}'
     - require:
-      - file: intellij-remove-prev-archive
+      - file: intellij-install-dir
 
 intellij-unpacked-dir:
   file.directory:
