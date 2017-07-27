@@ -16,17 +16,18 @@ intellij-install-dir:
 
 # curl fails (rc=23) if file exists
 # and test -f cannot detect corrupt archive
-{{ archive_file }}:
+intellij-remove-prev-archive:
   file.absent:
-    - require_in:
-      - cmd: intellij-download-archive
+    - name: {{ archive_file }}
+    - require:
+      - file: intellij-install-dir
 
 intellij-download-archive:
   cmd.run:
     - name: curl {{ intellij.dl_opts }} -o '{{ archive_file }}' '{{ intellij.source_url }}'
     - unless: test -f '{{ intellij.intellij_realcmd }}'
     - require:
-      - file: intellij-install-dir
+      - intellij-remove-prev-archive
 
 intellij-unpacked-dir:
   file.directory:
@@ -54,8 +55,8 @@ intellij-unpack-archive:
     - options: {{ intellij.unpack_opts }}
   {% endif %}
     - enforce_toplevel: False
-    - onchanges:
-      - file: intellij-unpacked-dir
+    - require:
+      - cmd: intellij-download-archive
 
 intellij-update-home-symlink:
   file.symlink:
