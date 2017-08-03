@@ -26,6 +26,8 @@ intellij-home-alt-set:
     - path: {{ intellij.intellij_real_home }}
     - require:
       - alternatives: intellij-home-alt-install
+    - onchanges:
+      - alternatives: intellij-home-alt-install
 
 # Add intelli to alternatives system
 intellij-alt-install:
@@ -36,11 +38,15 @@ intellij-alt-install:
     - priority: {{ intellij.alt_priority }}
     - require:
       - alternatives: intellij-home-alt-set
+    - onchanges:
+      - alternatives: intellij-home-alt-set
 
 intellij-alt-set:
   alternatives.set:
     - name: intellij
     - path: {{ intellij.intellij_realcmd }}
     - require:
+      - alternatives: intellij-alt-install
+    - onchanges:
       - alternatives: intellij-alt-install
 
