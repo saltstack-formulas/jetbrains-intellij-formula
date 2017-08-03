@@ -38,6 +38,8 @@ intellij-unpacked-dir:
     - force: True
     - require:
       - cmd: intellij-download-archive
+    - onchanges:
+      - cmd: intellij-download-archive
 
 intellij-unpack-archive:
   archive.extracted:
@@ -58,6 +60,8 @@ intellij-unpack-archive:
   {% endif %}
     - require:
       - cmd: intellij-download-archive
+    - onchanges:
+      - cmd: intellij-download-archive
 
 intellij-update-home-symlink:
   file.symlink:
@@ -65,6 +69,8 @@ intellij-update-home-symlink:
     - target: {{ intellij.intellij_real_home }}
     - force: True
     - require:
+      - archive: intellij-unpack-archive
+    - onchanges:
       - archive: intellij-unpack-archive
 
 intellij-desktop-entry:
@@ -84,16 +90,10 @@ intellij-desktop-entry:
 
 intellij-remove-archive:
   file.absent:
-    - name: {{ archive_file }}
+    - names:
+      - {{ archive_file }}
+      - {{ archive_file }}.sha256
     - require:
       - archive: intellij-unpack-archive
-
-{%- if intellij.source_hash %}
-intellij-remove-archive-hashfile:
-  file.absent:
-    - name: {{ archive_file }}.sha256
-    - require:
-      - archive: intellij-unpack-archive
-{%- endif %}
 
 {%- endif %}
