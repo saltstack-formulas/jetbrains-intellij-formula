@@ -25,8 +25,9 @@ intellij-remove-prev-archive:
 intellij-download-archive:
   cmd.run:
     - name: curl {{ intellij.dl_opts }} -o '{{ archive_file }}' '{{ intellij.source_url }}'
+    - unless: test -f '{{ intellij.intellij_realcmd }}'
     - require:
-      - file: intellij-install-dir
+      - file: intellij-remove-prev-archive
 
 intellij-unpacked-dir:
   file.directory:
@@ -36,19 +37,29 @@ intellij-unpacked-dir:
     - mode: 755
     - makedirs: True
     - force: True
-    - require:
-      - cmd: intellij-download-archive
     - onchanges:
       - cmd: intellij-download-archive
+
+  {% if grains['saltversioninfo'] <= [2016, 11, 6] and intellij.source_hash %}
+    # See: https://github.com/saltstack/salt/pull/41914
+intellij-check-archive-hash:
+  module.run:
+    - name: file.check_hash
+    - path: {{ archive_file }}
+    - file_hash: {{ intellij.source_hash }}
+    - onchanges:
+      - cmd: intellij-download-archive
+    - require_in:
+      - archive: intellij-unpack-archive
+  {%- endif %}
 
 intellij-unpack-archive:
   archive.extracted:
     - name: {{ intellij.intellij_real_home }}
     - source: file://{{ archive_file }}
-    {%- if intellij.source_hash %}
+  {%- if intellij.source_hash and grains['saltversioninfo'] > [2016, 11, 6] %}
     - source_hash: {{ intellij.source_hash }}
-    {%- endif %}
-    - archive_format: {{ intellij.archive_type }}
+  {%- endif %}
   {% if grains['saltversioninfo'] < [2016, 11, 0] %}
     - tar_options: {{ intellij.unpack_opts }}
     - if_missing: {{ intellij.intellij_realcmd }}
@@ -58,18 +69,15 @@ intellij-unpack-archive:
   {% if grains['saltversioninfo'] >= [2016, 11, 0] %}
     - enforce_toplevel: False
   {% endif %}
+    - archive_format: {{ intellij.archive_type }}
     - require:
-      - cmd: intellij-download-archive
-    - onchanges:
-      - cmd: intellij-download-archive
+      - file: intellij-unpacked-dir
 
 intellij-update-home-symlink:
   file.symlink:
     - name: {{ intellij.intellij_home }}
     - target: {{ intellij.intellij_real_home }}
     - force: True
-    - require:
-      - archive: intellij-unpack-archive
     - onchanges:
       - archive: intellij-unpack-archive
 
@@ -78,14 +86,14 @@ intellij-desktop-entry:
     - source: salt://intellij/files/intellij.desktop
     - name: /home/{{ pillar['user'] }}/Desktop/intellij.desktop
     - user: {{ pillar['user'] }}
-{% if salt['grains.get']('os_family') == 'Suse' or salt['grains.get']('os') == 'SUSE' %}
+  {% if salt['grains.get']('os_family') == 'Suse' or salt['grains.get']('os') == 'SUSE' %}
     - group: users
-{% else %}
+  {% else %}
     - group: {{ pillar['user'] }}
-{% endif %}
+  {% endif %}
     - mode: 755
     - force: True
-    - require:
+    - onchanges:
       - archive: intellij-unpack-archive
 
 intellij-remove-archive:
@@ -93,7 +101,7 @@ intellij-remove-archive:
     - names:
       - {{ archive_file }}
       - {{ archive_file }}.sha256
-    - require:
+    - onchanges:
       - archive: intellij-unpack-archive
 
 {%- endif %}
