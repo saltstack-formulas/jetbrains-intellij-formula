@@ -70,8 +70,8 @@ intellij-unpack-archive:
     - enforce_toplevel: False
   {% endif %}
     - archive_format: {{ intellij.archive_type }}
-    - require:
-      - file: intellij-unpacked-dir
+    - onchanges:
+      - cmd: intellij-download-archive
 
 intellij-update-home-symlink:
   file.symlink:
