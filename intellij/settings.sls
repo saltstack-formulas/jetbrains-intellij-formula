@@ -16,7 +16,7 @@
 {%- set default_archive_type   = 'tar' %}
 {%- set default_symlink        = '/usr/bin/idea.sh' %}
 {%- set default_realcmd        = default_real_home + '/bin/idea.sh' %}
-{%- set default_alt_priority   = '30' %}         
+{%- set default_alt_priority   = '30' %}
 
 {% if salt['grains.get']('saltversioninfo') <= [2016, 11, 6] %}
    ######## version 2017.2 hash ######
