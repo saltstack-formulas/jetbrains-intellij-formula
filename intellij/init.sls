@@ -25,13 +25,13 @@ intellij-remove-prev-archive:
 intellij-download-archive:
   cmd.run:
     - name: curl {{ intellij.dl_opts }} -o '{{ archive_file }}' '{{ intellij.source_url }}'
-    - unless: test -f '{{ intellij.intellij_realcmd }}'
+    - unless: test -f '{{ intellij.realcmd }}'
     - require:
       - file: intellij-remove-prev-archive
 
 intellij-unpacked-dir:
   file.directory:
-    - name: {{ intellij.intellij_real_home }}
+    - name: {{ intellij.real_home }}
     - user: root
     - group: root
     - mode: 755
@@ -55,14 +55,14 @@ intellij-check-archive-hash:
 
 intellij-unpack-archive:
   archive.extracted:
-    - name: {{ intellij.intellij_real_home }}
+    - name: {{ intellij.real_home }}
     - source: file://{{ archive_file }}
   {%- if intellij.source_hash and grains['saltversioninfo'] > [2016, 11, 6] %}
     - source_hash: {{ intellij.source_hash }}
   {%- endif %}
   {% if grains['saltversioninfo'] < [2016, 11, 0] %}
     - tar_options: {{ intellij.unpack_opts }}
-    - if_missing: {{ intellij.intellij_realcmd }}
+    - if_missing: {{ intellij.realcmd }}
   {% else %}
     - options: {{ intellij.unpack_opts }}
   {% endif %}
@@ -76,7 +76,7 @@ intellij-unpack-archive:
 intellij-update-home-symlink:
   file.symlink:
     - name: {{ intellij.intellij_home }}
-    - target: {{ intellij.intellij_real_home }}
+    - target: {{ intellij.real_home }}
     - force: True
     - onchanges:
       - archive: intellij-unpack-archive
