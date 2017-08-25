@@ -8,7 +8,7 @@
 {%- set mirror1                = 'https://download-cf.jetbrains.com/idea/' %}
 {%- set mirror2                = 'https://download.jetbrains.com/idea/' %}
 
-{%- set default_user           = 'undefined' %}
+{%- set default_user           = 'undefined_user' %}
 {%- set default_prefs_url      = 'undefined' %}
 {%- set default_prefs_path     = 'undefined' %}
 {%- set default_prefix         = '/usr/share/java' %}

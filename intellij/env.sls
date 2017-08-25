@@ -12,7 +12,8 @@ intellij-config:
     - context:
       intellij_home: {{ intellij.intellij_home }}
 
-{% if intellij.user != 'undefined' %}
+{% if intellij.user != 'undefined_user' %}
+
   {% if intellij.prefs_url != 'undefined' %}
 intellij-get-preferences-importfile-from-url:
   cmd.run:

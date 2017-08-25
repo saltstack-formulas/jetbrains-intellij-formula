@@ -81,7 +81,7 @@ intellij-update-home-symlink:
     - onchanges:
       - archive: intellij-unpack-archive
 
-{%- if intellij.user != 'undefined' %}
+{%- if intellij.user != 'undefined_user' %}
 intellij-desktop-entry:
   file.managed:
     - source: salt://intellij/files/intellij.desktop
