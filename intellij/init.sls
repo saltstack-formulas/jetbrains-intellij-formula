@@ -4,7 +4,7 @@
 
 {%- if intellij.source_url is defined %}
 
-  {%- set archive_file = intellij.prefix + '/' + intellij.source_url.split('/') | last %}
+  {%- set archive_file = intellij.prefix ~ '/' ~ intellij.source_url.split('/') | last %}
 
 intellij-install-dir:
   file.directory:
