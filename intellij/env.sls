@@ -14,12 +14,12 @@ intellij-config:
 
 {% if intellij.user != 'undefined' %}
   {% if intellij.settings_url != 'undefined' %}
-intellij-get-settings-file-from-url:
+intellij-get-settings-importfile-from-url:
   cmd.run:
     - name: curl {{ intellij.dl_opts }} -o /home/{{ intellij.home }}/my-intellij-settings.jar '{{ intellij.settings_url }}'
     - if_missing: /home/{{ intellij.home }}/my-intellij-settings.jar
   {% elif intellij.settings_path != 'undefined' %}
-intellij-get-settings-file-from-path:
+intellij-get-settings-importfile-from-path:
   file.managed:
     - name: /home/{{ intellij.home }}/my-intellij-settings.jar
     - source: {{ intellij.settings_path }}
