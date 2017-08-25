@@ -3,12 +3,13 @@ intellij:
   year: 17
   release: 2
   source_url: https://download-cf.jetbrains.com/idea/ideaIC-2017.2-no-jdk.tar.gz
-  source_hash: https://download.jetbrains.com/idea/ideaIC-2017.2-no-jdk.tar.gz.sha256
+  ###source_hash: https://download.jetbrains.com/idea/ideaIC-2017.2-no-jdk.tar.gz.sha256
+  source_hash = sha256=d88257b17447398ed60e7d774803cbc21e0fe7750add09622a98b936f14cd91f
   prefix: /usr/share/java
   archive_type: tar
-  dl_opts: 
+  dl_opts: -s 
   unpack_opts: -z -C /usr/share/java/idea-IC-17-2 --strip-components=1
-  real_home: /usr/share/java/idea-IC-17.2
+  real_home: /usr/share/java/idea-IC-17-2
+  realcmd: /usr/share/java/idea-IC-17-2
   symlink: /usr/bin/idea.sh
-  realcmd: /opt/intellij/bin/idea.sh
   alt_priority: 30
