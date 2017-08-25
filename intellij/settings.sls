@@ -9,8 +9,8 @@
 {%- set mirror2                = 'https://download.jetbrains.com/idea/' %}
 
 {%- set default_user           = 'undefined' %}
-{%- set default_prefs_url   = 'undefined' %}
-{%- set default_prefs_path  = 'undefined' %}
+{%- set default_prefs_url      = 'undefined' %}
+{%- set default_prefs_path     = 'undefined' %}
 {%- set default_prefix         = '/usr/share/java' %}
 {%- set default_source_url     = mirror1 ~ 'ideaIC-20' ~ year ~ '.' ~ release ~ '-no-jdk.tar.gz' %}
 {%- set default_dl_opts        = ' -s ' %}

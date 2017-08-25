@@ -16,12 +16,12 @@ intellij-config:
   {% if intellij.prefs_url != 'undefined' %}
 intellij-get-preferences-importfile-from-url:
   cmd.run:
-    - name: curl {{ intellij.dl_opts }} -o /home/{{ intellij.user }}/my-intellij-preferences.jar '{{ intellij.prefs_url }}'
-    - if_missing: /home/{{ intellij.user }}/my-intellij-preferences.jar
+    - name: curl {{ intellij.dl_opts }} -o /home/{{ intellij.user }}/my-preferences.jar '{{ intellij.prefs_url }}'
+    - if_missing: /home/{{ intellij.user }}/my-preferences.jar
   {% elif intellij.prefs_path != 'undefined' %}
 intellij-get-preferences-importfile-from-path:
   file.managed:
-    - name: /home/{{ intellij.user }}/my-intellij-preferences.jar
+    - name: /home/{{ intellij.user }}/my-preferences.jar
     - source: {{ intellij.prefs_path }}
     - mode: 644
     - user: {{ intellij.user }}
@@ -30,7 +30,7 @@ intellij-get-preferences-importfile-from-path:
    {% else %}
     - group: {{ intellij.user }}
    {% endif %}
-    - if_missing: /home/{{ intellij.user }}/my-intellij-preferences.jar
+    - if_missing: /home/{{ intellij.user }}/my-preferences.jar
   {% endif %}
 {% endif %}
 
