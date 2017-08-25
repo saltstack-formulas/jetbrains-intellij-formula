@@ -13,16 +13,16 @@ intellij-config:
       intellij_home: {{ intellij.intellij_home }}
 
 {% if intellij.user != 'undefined' %}
-  {% if intellij.settings_url != 'undefined' %}
-intellij-get-settings-importfile-from-url:
+  {% if intellij.prefs_url != 'undefined' %}
+intellij-get-preferences-importfile-from-url:
   cmd.run:
-    - name: curl {{ intellij.dl_opts }} -o /home/{{ intellij.user }}/my-intellij-settings.jar '{{ intellij.settings_url }}'
-    - if_missing: /home/{{ intellij.user }}/my-intellij-settings.jar
-  {% elif intellij.settings_path != 'undefined' %}
-intellij-get-settings-importfile-from-path:
+    - name: curl {{ intellij.dl_opts }} -o /home/{{ intellij.user }}/my-intellij-preferences.jar '{{ intellij.prefs_url }}'
+    - if_missing: /home/{{ intellij.user }}/my-intellij-preferences.jar
+  {% elif intellij.prefs_path != 'undefined' %}
+intellij-get-preferences-importfile-from-path:
   file.managed:
-    - name: /home/{{ intellij.user }}/my-intellij-settings.jar
-    - source: {{ intellij.settings_path }}
+    - name: /home/{{ intellij.user }}/my-intellij-preferences.jar
+    - source: {{ intellij.prefs_path }}
     - mode: 644
     - user: {{ intellij.user }}
    {% if salt['grains.get']('os_family') == 'Suse' or salt['grains.get']('os') == 'SUSE' %}
@@ -30,7 +30,7 @@ intellij-get-settings-importfile-from-path:
    {% else %}
     - group: {{ intellij.user }}
    {% endif %}
-    - if_missing: /home/{{ intellij.user }}/my-intellij-settings.jar
+    - if_missing: /home/{{ intellij.user }}/my-intellij-preferences.jar
   {% endif %}
 {% endif %}
 

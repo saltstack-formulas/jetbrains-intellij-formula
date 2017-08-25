@@ -9,8 +9,8 @@
 {%- set mirror2                = 'https://download.jetbrains.com/idea/' %}
 
 {%- set default_user           = 'undefined' %}
-{%- set default_settings_url   = 'undefined' %}
-{%- set default_settings_path  = 'undefined' %}
+{%- set default_prefs_url   = 'undefined' %}
+{%- set default_prefs_path  = 'undefined' %}
 {%- set default_prefix         = '/usr/share/java' %}
 {%- set default_source_url     = mirror1 ~ 'ideaIC-20' ~ year ~ '.' ~ release ~ '-no-jdk.tar.gz' %}
 {%- set default_dl_opts        = ' -s ' %}
@@ -36,17 +36,17 @@
   {%- set source_hash   = g.get('source_hash', p.get('source_hash', default_source_hash )) %}
 {%- endif %}
 
-{%- set settings_url    = g.get('settings_url', p.get('settings_url', default_settings_url )) %}
-{%- set settings_path   = g.get('settings_path', p.get('settings_path', default_settings_path )) %}
-{%- set user            = g.get('default_user', salt['pillar.get']('default_user', p.get('default_user', default_user)) %}
-{%- set prefix          = g.get('prefix', p.get('prefix', default_prefix )) %}
-{%- set real_home       = g.get('realhome', p.get('realhome', default_real_home )) %}
-{%- set dl_opts         = g.get('dl_opts', p.get('dl_opts', default_dl_opts)) %}
-{%- set unpack_opts     = g.get('unpack_opts', p.get('unpack_opts', default_unpack_opts)) %}
-{%- set archive_type    = g.get('archive_type', p.get('archive_type', default_archive_type )) %}
-{%- set symlink         = g.get('symlink', p.get('symlink', default_symlink )) %}
-{%- set realcmd         = g.get('realcmd', p.get('realcmd', default_realcmd )) %}
-{%- set alt_priority    = g.get('alt_priority', p.get('alt_priority', default_alt_priority )) %}
+{%- set prefs_url    = g.get('prefs_url', p.get('prefs_url', default_prefs_url )) %}
+{%- set prefs_path   = g.get('prefs_path', p.get('prefs_path', default_prefs_path )) %}
+{%- set user         = g.get('default_user', salt['pillar.get']('default_user', p.get('default_user', default_user)) %}
+{%- set prefix       = g.get('prefix', p.get('prefix', default_prefix )) %}
+{%- set real_home    = g.get('realhome', p.get('realhome', default_real_home )) %}
+{%- set dl_opts      = g.get('dl_opts', p.get('dl_opts', default_dl_opts)) %}
+{%- set unpack_opts  = g.get('unpack_opts', p.get('unpack_opts', default_unpack_opts)) %}
+{%- set archive_type = g.get('archive_type', p.get('archive_type', default_archive_type )) %}
+{%- set symlink      = g.get('symlink', p.get('symlink', default_symlink )) %}
+{%- set realcmd      = g.get('realcmd', p.get('realcmd', default_realcmd )) %}
+{%- set alt_priority = g.get('alt_priority', p.get('alt_priority', default_alt_priority )) %}
 
 {%- set intellij = {} %}
 {%- do intellij.update( { 'intellij_home'      : intellij_home,
@@ -54,8 +54,8 @@
                           'release'            : release,
                           'source_url'         : source_url,
                           'source_hash'        : source_hash,
-                          'settings_url'       : settings_url,
-                          'settings_path'      : settings_path,
+                          'prefs_url'          : prefs_url,
+                          'prefs_path'         : prefs_path,
                           'dl_opts'            : dl_opts,
                           'unpack_opts'        : unpack_opts,
                           'archive_type'       : archive_type,

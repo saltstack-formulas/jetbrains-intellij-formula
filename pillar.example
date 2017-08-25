@@ -7,8 +7,8 @@ intellij:
   source_url: https://download-cf.jetbrains.com/idea/ideaIC-2017.2-no-jdk.tar.gz
   ###source_hash: https://download.jetbrains.com/idea/ideaIC-2017.2-no-jdk.tar.gz.sha256
   source_hash = sha256=d88257b17447398ed60e7d774803cbc21e0fe7750add09622a98b936f14cd91f
-  settings_url: undefined
-  settings_path: undefined
+  prefs_url: undefined
+  prefs_path: undefined
   prefix: /usr/share/java
   archive_type: tar
   dl_opts: -s 
