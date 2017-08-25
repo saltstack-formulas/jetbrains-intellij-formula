@@ -25,11 +25,12 @@ intellij-get-settings-importfile-from-path:
     - source: {{ intellij.settings_path }}
     - mode: 644
     - user: {{ intellij.user }}
-      {% if salt['grains.get']('os_family') == 'Suse' or salt['grains.get']('os') == 'SUSE' %}
+   {% if salt['grains.get']('os_family') == 'Suse' or salt['grains.get']('os') == 'SUSE' %}
     - group: users
-      {% else %}
+   {% else %}
     - group: {{ intellij.user }}
-      {% endif %}
+   {% endif %}
+    - if_missing: /home/{{ intellij.user }}/my-intellij-settings.jar
   {% endif %}
 {% endif %}
 
