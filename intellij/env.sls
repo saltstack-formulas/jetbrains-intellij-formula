@@ -12,6 +12,27 @@ intellij-config:
     - context:
       intellij_home: {{ intellij.intellij_home }}
 
+{% if intellij.user != 'undefined' %}
+  {% if intellij.settings_url != 'undefined' %}
+intellij-get-settings-file-from-url:
+  cmd.run:
+    - name: curl {{ intellij.dl_opts }} -o /home/{{ intellij.home }}/my-intellij-settings.jar '{{ intellij.settings_url }}'
+    - if_missing: /home/{{ intellij.home }}/my-intellij-settings.jar
+  {% elif intellij.settings_path != 'undefined' %}
+intellij-get-settings-file-from-path:
+  file.managed:
+    - name: /home/{{ intellij.home }}/my-intellij-settings.jar
+    - source: {{ intellij.settings_path }}
+    - mode: 644
+    - user: {{ intellij.user }}
+      {% if salt['grains.get']('os_family') == 'Suse' or salt['grains.get']('os') == 'SUSE' %}
+    - group: users
+      {% else %}
+    - group: {{ intellij.user }}
+      {% endif %}
+  {% endif %}
+{% endif %}
+
 # Add intelliJhome to alternatives system
 intellij-home-alt-install:
   alternatives.install:

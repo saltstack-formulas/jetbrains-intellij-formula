@@ -81,20 +81,22 @@ intellij-update-home-symlink:
     - onchanges:
       - archive: intellij-unpack-archive
 
+{%- if intellij.user != 'undefined' %}
 intellij-desktop-entry:
   file.managed:
     - source: salt://intellij/files/intellij.desktop
-    - name: /home/{{ pillar['user'] }}/Desktop/intellij.desktop
-    - user: {{ pillar['user'] }}
+    - name: /home/{{ intellij.user }}/Desktop/intellij.desktop
+    - user: {{ intellij.user }}
   {% if salt['grains.get']('os_family') == 'Suse' or salt['grains.get']('os') == 'SUSE' %}
     - group: users
   {% else %}
-    - group: {{ pillar['user'] }}
+    - group: {{ intellij.user }}
   {% endif %}
-    - mode: 755
+    - mode: 644
     - force: True
     - onchanges:
       - archive: intellij-unpack-archive
+{% endif %}
 
 intellij-remove-archive:
   file.absent:
