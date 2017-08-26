@@ -29,6 +29,7 @@ intellij-get-preferences-importfile-from-path:
     - if_missing: /home/{{ intellij.user }}/my-preferences.jar
   {% endif %}
 
+  {% if intellij.prefs_url != 'undefined' or intellij.prefs_path != 'undefined' %}
 intellij-preferences-file-perms:
   file.managed:
     - name: /home/{{ intellij.user }}/my-preferences.jar
@@ -43,6 +44,7 @@ intellij-preferences-file-perms:
     - onchanges:
       - cmd: intellij-get-preferences-importfile-from-url
       - file: intellij-get-preferences-importfile-from-path
+  {% endif %}
   
 {% endif %}
 
