@@ -14,7 +14,7 @@
 {%- set default_prefix         = '/usr/share/java' %}
 {%- set default_source_url     = mirror1 ~ 'ideaIC-20' ~ year ~ '.' ~ release ~ '-no-jdk.tar.gz' %}
 {%- set default_dl_opts        = ' -s ' %}
-{%- set default_real_home      = default_prefix ~ '/idea-IC-' ~ year ~ release %}
+{%- set default_real_home      = default_prefix ~ '/idea-IC-' ~ year ~ '.' ~ release %}
 {%- set default_unpack_opts    = 'z -C ' ~ default_real_home ~ ' --strip-components=1' %}
 {%- set default_archive_type   = 'tar' %}
 {%- set default_symlink        = '/usr/bin/idea.sh' %}
@@ -40,7 +40,7 @@
 {%- set prefs_path   = g.get('prefs_path', p.get('prefs_path', default_prefs_path )) %}
 {%- set user         = g.get('default_user', salt['pillar.get']('default_user', p.get('default_user', default_user))) %}
 {%- set prefix       = g.get('prefix', p.get('prefix', default_prefix )) %}
-{%- set real_home    = g.get('realhome', p.get('realhome', default_real_home )) %}
+{%- set real_home    = g.get('real_home', p.get('real_home', default_real_home )) %}
 {%- set dl_opts      = g.get('dl_opts', p.get('dl_opts', default_dl_opts)) %}
 {%- set unpack_opts  = g.get('unpack_opts', p.get('unpack_opts', default_unpack_opts)) %}
 {%- set archive_type = g.get('archive_type', p.get('archive_type', default_archive_type )) %}
