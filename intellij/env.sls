@@ -45,7 +45,7 @@ intellij-home-alt-install:
 
 intellij-home-alt-set:
   alternatives.set:
-    - name: {{ intellij.intellij-home }}
+    - name: {{ intellij.intellij_home }}
     - path: {{ intellij.real_home }}
     - onchanges:
       - alternatives: intellij-home-alt-install
