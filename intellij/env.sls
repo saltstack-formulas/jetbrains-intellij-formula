@@ -41,14 +41,14 @@ intellij-get-preferences-importfile-from-path:
 # Add intelliJhome to alternatives system
 intellij-home-alt-install:
   alternatives.install:
-    - name: intellij-home
+    - name: intellijhome
     - link: {{ intellij.intellij_home }}
     - path: {{ intellij.real_home }}
     - priority: {{ intellij.alt_priority }}
 
 intellij-home-alt-set:
   alternatives.set:
-    - name: intellij-home
+    - name: intellijhome
     - link: {{ intellij.intellij_home }}
     - path: {{ intellij.real_home }}
     - onchanges:
