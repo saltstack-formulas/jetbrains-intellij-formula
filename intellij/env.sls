@@ -20,7 +20,9 @@ intellij-get-preferences-importfile-from-url:
     - name: curl {{ intellij.dl_opts }} -o /home/{{ intellij.user }}/my-preferences.jar '{{ intellij.prefs_url }}'
     - runas: {{ intellij.user }}
     - if_missing: /home/{{ intellij.user }}/my-preferences.jar
+
   {% elif intellij.prefs_path != 'undefined' %}
+
 intellij-get-preferences-importfile-from-path:
   file.managed:
     - name: /home/{{ intellij.user }}/my-preferences.jar
@@ -33,6 +35,7 @@ intellij-get-preferences-importfile-from-path:
    {% endif %}
     - if_missing: /home/{{ intellij.user }}/my-preferences.jar
   {% endif %}
+
 {% endif %}
 
 # Add intelliJhome to alternatives system
@@ -45,7 +48,8 @@ intellij-home-alt-install:
 
 intellij-home-alt-set:
   alternatives.set:
-    - name: {{ intellij.intellij_home }}
+    - name: intellij-home
+    - link: {{ intellij.intellij_home }}
     - path: {{ intellij.real_home }}
     - onchanges:
       - alternatives: intellij-home-alt-install
@@ -63,6 +67,7 @@ intellij-alt-install:
 intellij-alt-set:
   alternatives.set:
     - name: intellij
+    - link: {{ intellij.symlink }}
     - path: {{ intellij.realcmd }}
     - onchanges:
       - alternatives: intellij-alt-install
