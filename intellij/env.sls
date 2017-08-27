@@ -18,6 +18,7 @@ intellij-config:
 intellij-get-preferences-importfile-from-url:
   cmd.run:
     - name: curl {{ intellij.dl_opts }} -o /home/{{ intellij.user }}/my-preferences.jar '{{ intellij.prefs_url }}'
+    - runas: {{ intellij.user }}
     - if_missing: /home/{{ intellij.user }}/my-preferences.jar
 
   {% elif intellij.prefs_path != 'undefined' %}
@@ -26,26 +27,14 @@ intellij-get-preferences-importfile-from-path:
   file.managed:
     - name: /home/{{ intellij.user }}/my-preferences.jar
     - source: {{ intellij.prefs_path }}
-    - if_missing: /home/{{ intellij.user }}/my-preferences.jar
-  {% endif %}
-
-  {% if intellij.prefs_url != 'undefined' or intellij.prefs_path != 'undefined' %}
-intellij-preferences-file-perms:
-  file.managed:
-    - name: /home/{{ intellij.user }}/my-preferences.jar
-    - replace: False
-    - mode: 644
     - user: {{ intellij.user }}
    {% if salt['grains.get']('os_family') == 'Suse' or salt['grains.get']('os') == 'SUSE' %}
     - group: users
    {% else %}
     - group: {{ intellij.user }}
    {% endif %}
-    - onchanges:
-      - cmd: intellij-get-preferences-importfile-from-url
-      - file: intellij-get-preferences-importfile-from-path
+    - if_missing: /home/{{ intellij.user }}/my-preferences.jar
   {% endif %}
-  
 {% endif %}
 
 # Add intelliJhome to alternatives system
