@@ -1,7 +1,7 @@
 intellij_home: /opt/intellij
-#default_user: undefined_user
+default_user: undefined_user
 intellij:
-  #default_user: undefined_user
+  default_user: undefined_user
   year: 17
   release: 2
   source_url: https://download-cf.jetbrains.com/idea/ideaIC-2017.2-no-jdk.tar.gz
