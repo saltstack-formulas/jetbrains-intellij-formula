@@ -12,7 +12,7 @@
 {%- set default_prefs_path     = 'undefined' %}
 {%- set default_prefix         = '/usr/share/java' %}
 {%- set default_source_url     = mirror ~ 'ideaIC-20' ~ year ~ '.' ~ release ~ '-no-jdk.tar.gz' %}
-{%- set default_dl_opts        = ' -s ' %}
+{%- set default_dl_opts        = ' -s -L ' %}
 {%- set default_real_home      = default_prefix ~ '/idea-IC-' ~ year ~ '.' ~ release %}
 {%- set default_unpack_opts    = 'z -C ' ~ default_real_home ~ ' --strip-components=1' %}
 {%- set default_archive_type   = 'tar' %}

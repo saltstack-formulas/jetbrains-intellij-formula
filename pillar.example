@@ -11,7 +11,7 @@ intellij:
   prefs_path: undefined
   prefix: /usr/share/java
   archive_type: tar
-  dl_opts: -s 
+  dl_opts: -s -L 
   unpack_opts: -z -C /usr/share/java/idea-IC-17-2.4 --strip-components=1
   real_home: /usr/share/java/idea-IC-17-2.4
   realcmd: /usr/share/java/idea-IC-17-2.4/bin/idea.sh
