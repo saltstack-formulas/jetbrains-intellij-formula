@@ -39,4 +39,4 @@ Full support for linux alternatives system. This state is not applicable for Arc
 
 Please see the pillar.example for configuration.
 
-Tested on Ubuntu 16.04, and Fedora 25
+Tested on Ubuntu, Fedora, Arch, and Suse.
