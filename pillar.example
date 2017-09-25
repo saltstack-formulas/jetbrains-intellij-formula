@@ -3,17 +3,17 @@ default_user: undefined_user
 intellij:
   default_user: undefined_user
   year: 17
-  release: 2
-  source_url: https://download-cf.jetbrains.com/idea/ideaIC-2017.2-no-jdk.tar.gz
-  ###source_hash: https://download.jetbrains.com/idea/ideaIC-2017.2-no-jdk.tar.gz.sha256
-  source_hash: sha256=d88257b17447398ed60e7d774803cbc21e0fe7750add09622a98b936f14cd91f
+  release: 2.4
+  source_url: https://download.jetbrains.com/idea/ideaIC-2017.2.4-no-jdk.tar.gz
+  ###source_hash: https://download.jetbrains.com/idea/ideaIC-2017.2.4-no-jdk.tar.gz.sha256
+  source_hash: sha256=6440b4fa92794614799f6a3a3da4a84f532721aba7b5460402f741025ef94dc8
   prefs_url: undefined
   prefs_path: undefined
   prefix: /usr/share/java
   archive_type: tar
   dl_opts: -s 
-  unpack_opts: -z -C /usr/share/java/idea-IC-17-2 --strip-components=1
-  real_home: /usr/share/java/idea-IC-17-2
-  realcmd: /usr/share/java/idea-IC-17-2/bin/idea.sh
+  unpack_opts: -z -C /usr/share/java/idea-IC-17-2.4 --strip-components=1
+  real_home: /usr/share/java/idea-IC-17-2.4
+  realcmd: /usr/share/java/idea-IC-17-2.4/bin/idea.sh
   symlink: /usr/bin/idea.sh
-  alt_priority: 30
+  alt_priority: 17

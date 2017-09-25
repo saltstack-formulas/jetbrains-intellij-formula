@@ -4,15 +4,14 @@
 {%- set intellij_home = salt['grains.get']('intellij_home', salt['pillar.get']('intellij_home', '/opt/intellij')) %}
 
 {%- set year                   = g.get('year', p.get('year', '17' )) %}
-{%- set release                = g.get('release', p.get('release','2' )) %}
-{%- set mirror1                = 'https://download-cf.jetbrains.com/idea/' %}
-{%- set mirror2                = 'https://download.jetbrains.com/idea/' %}
+{%- set release                = g.get('release', p.get('release','2.4' )) %}
+{%- set mirror                 = 'https://download.jetbrains.com/idea/' %}
 
 {%- set default_user           = 'undefined_user' %}
 {%- set default_prefs_url      = 'undefined' %}
 {%- set default_prefs_path     = 'undefined' %}
 {%- set default_prefix         = '/usr/share/java' %}
-{%- set default_source_url     = mirror1 ~ 'ideaIC-20' ~ year ~ '.' ~ release ~ '-no-jdk.tar.gz' %}
+{%- set default_source_url     = mirror ~ 'ideaIC-20' ~ year ~ '.' ~ release ~ '-no-jdk.tar.gz' %}
 {%- set default_dl_opts        = ' -s ' %}
 {%- set default_real_home      = default_prefix ~ '/idea-IC-' ~ year ~ '.' ~ release %}
 {%- set default_unpack_opts    = 'z -C ' ~ default_real_home ~ ' --strip-components=1' %}
@@ -25,7 +24,7 @@
    ######## version 2017.2 hash ######
    {%- set default_source_hash = 'sha256=d88257b17447398ed60e7d774803cbc21e0fe7750add09622a98b936f14cd91f' %}
 {% else %}
-   {%- set default_source_hash = mirror2 ~ 'ideaIC-20' ~ year ~ '.' ~ release ~ '-no-jdk.tar.gz' ~ '.sha256' %}
+   {%- set default_source_hash = mirror ~ 'ideaIC-20' ~ year ~ '.' ~ release ~ '-no-jdk.tar.gz' ~ '.sha256' %}
 {% endif %}
 
 {%- set default_dl_opts = ' -s ' %}
