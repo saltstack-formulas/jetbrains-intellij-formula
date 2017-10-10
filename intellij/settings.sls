@@ -4,7 +4,7 @@
 {%- set intellij_home = salt['grains.get']('intellij_home', salt['pillar.get']('intellij_home', '/opt/intellij')) %}
 
 {%- set year                   = g.get('year', p.get('year', '17' )) %}
-{%- set release                = g.get('release', p.get('release','2.4' )) %}
+{%- set release                = g.get('release', p.get('release','2.5' )) %}
 {%- set mirror                 = 'https://download.jetbrains.com/idea/' %}
 
 {%- set default_user           = 'undefined_user' %}
@@ -21,8 +21,8 @@
 {%- set default_alt_priority   = '30' %}
 
 {% if salt['grains.get']('saltversioninfo') <= [2016, 11, 6] %}
-   ######## version 2017.2 hash ######
-   {%- set default_source_hash = 'sha256=d88257b17447398ed60e7d774803cbc21e0fe7750add09622a98b936f14cd91f' %}
+   ######## version 2017.2.5 hash ######
+   {%- set default_source_hash = 'sha256=841309bf470c0ed15ac41c96e877128578bd04c37a827b3505977cff7c45e73b' %}
 {% else %}
    {%- set default_source_hash = mirror ~ 'ideaIC-20' ~ year ~ '.' ~ release ~ '-no-jdk.tar.gz' ~ '.sha256' %}
 {% endif %}
