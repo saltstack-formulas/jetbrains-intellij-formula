@@ -3,22 +3,24 @@
 
 {%- set intellij_home = salt['grains.get']('intellij_home', salt['pillar.get']('intellij_home', '/opt/intellij')) %}
 
-{%- set year                   = g.get('year', p.get('year', '17' )) %}
-{%- set release                = g.get('release', p.get('release','2.5' )) %}
-{%- set mirror                 = 'https://download.jetbrains.com/idea/' %}
+{%- set year         = g.get('year', p.get('year', '17' )) %}
+{%- set release      = g.get('release', p.get('release','2.5' )) %}
+{%- set mirror       = 'https://download.jetbrains.com/idea/' %}
 
-{%- set default_user           = 'undefined_user' %}
-{%- set default_prefs_url      = 'undefined' %}
-{%- set default_prefs_path     = 'undefined' %}
-{%- set default_prefix         = '/usr/share/java' %}
-{%- set default_source_url     = mirror ~ 'ideaIC-20' ~ year ~ '.' ~ release ~ '-no-jdk.tar.gz' %}
-{%- set default_dl_opts        = ' -s -L ' %}
-{%- set default_real_home      = default_prefix ~ '/idea-IC-' ~ year ~ '.' ~ release %}
-{%- set default_unpack_opts    = 'z -C ' ~ default_real_home ~ ' --strip-components=1' %}
-{%- set default_archive_type   = 'tar' %}
-{%- set default_symlink        = '/usr/bin/idea.sh' %}
-{%- set default_realcmd        = default_real_home ~ '/bin/idea.sh' %}
-{%- set default_alt_priority   = '30' %}
+{%- set default_user         = 'undefined_user' %}
+{%- set default_prefs_url    = 'undefined' %}
+{%- set default_prefs_path   = 'undefined' %}
+{%- set default_prefix       = '/usr/share/java' %}
+{%- set default_source_url   = mirror ~ 'ideaIC-20' ~ year ~ '.' ~ release ~ '-no-jdk.tar.gz' %}
+{%- set default_dl_opts      = ' -s -L ' %}
+{%- set default_dl_retries   = '1' %}
+{%- set default_dl_interval  = '60' %}
+{%- set default_real_home    = default_prefix ~ '/idea-IC-' ~ year ~ '.' ~ release %}
+{%- set default_unpack_opts  = 'z -C ' ~ default_real_home ~ ' --strip-components=1' %}
+{%- set default_archive_type = 'tar' %}
+{%- set default_symlink      = '/usr/bin/idea.sh' %}
+{%- set default_realcmd      = default_real_home ~ '/bin/idea.sh' %}
+{%- set default_alt_priority = '30' %}
 
 {% if salt['grains.get']('saltversioninfo') <= [2016, 11, 6] %}
    ######## version 2017.2.5 hash ######
@@ -30,9 +32,9 @@
 {%- set default_dl_opts = ' -s ' %}
 {%- set source_url      = g.get('source_url', p.get('source_url', default_source_url )) %}
 {%- if source_url == default_source_url %}
-  {%- set source_hash   = default_source_hash %}
+  {%- set source_hash = default_source_hash %}
 {%- else %}
-  {%- set source_hash   = g.get('source_hash', p.get('source_hash', default_source_hash )) %}
+  {%- set source_hash = g.get('source_hash', p.get('source_hash', default_source_hash )) %}
 {%- endif %}
 
 {%- set prefs_url    = g.get('prefs_url', p.get('prefs_url', default_prefs_url )) %}
@@ -41,6 +43,8 @@
 {%- set prefix       = g.get('prefix', p.get('prefix', default_prefix )) %}
 {%- set real_home    = g.get('real_home', p.get('real_home', default_real_home )) %}
 {%- set dl_opts      = g.get('dl_opts', p.get('dl_opts', default_dl_opts)) %}
+{%- set dl_retries   = g.get('dl_retries', p.get('dl_retries', default_dl_retries)) %}
+{%- set dl_interval  = g.get('dl_interval', p.get('dl_interval', default_dl_interval)) %}
 {%- set unpack_opts  = g.get('unpack_opts', p.get('unpack_opts', default_unpack_opts)) %}
 {%- set archive_type = g.get('archive_type', p.get('archive_type', default_archive_type )) %}
 {%- set symlink      = g.get('symlink', p.get('symlink', default_symlink )) %}
@@ -56,6 +60,8 @@
                           'prefs_url'          : prefs_url,
                           'prefs_path'         : prefs_path,
                           'dl_opts'            : dl_opts,
+                          'dl_retries'         : dl_retries,
+                          'dl_interval'        : dl_interval,
                           'unpack_opts'        : unpack_opts,
                           'archive_type'       : archive_type,
                           'user'               : user,

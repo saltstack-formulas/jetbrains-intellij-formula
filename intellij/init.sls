@@ -28,6 +28,11 @@ intellij-download-archive:
     - unless: test -f '{{ intellij.realcmd }}'
     - require:
       - file: intellij-remove-prev-archive
+    {% if grains['saltversioninfo'] >= [2017, 7, 0] %}
+    - retry:
+        attempts: {{ intellij.dl_retries }}
+        interval: {{ intellij.dl_interval }}
+    {% endif %}
 
 intellij-unpacked-dir:
   file.directory:
