@@ -1,0 +1,38 @@
+#Default Look Dictionary
+
+intellij:
+  prefix: /usr/lib/java
+  tmpdir: /tmp/jetbrainstmp
+  symlink: /usr/bin/intellij
+  symhome: /opt/jetbrains/intellij
+  command: /bin/idea.sh
+  homes: /home
+  osflavour: linuxWithoutJDK
+
+  jetbrains:
+    product: II
+    edition: C
+    uri: https://data.services.jetbrains.com/products/releases?latest=true&code=
+
+  dl:
+    archive_type: tar
+    opts: -s -L
+    interval: 60
+    retries: 2
+    source_url:
+    src_hashfile:
+    src_hashsum:
+    archive_name:
+    unpack_opts:
+
+  alt:
+    priority: 170
+    realhome: 
+    realcmd:
+
+  prefs:
+    user: undefined_user
+    importurl:
+    importdir:
+    jarfile: intellij-prefs.jar
+

@@ -1,0 +1,58 @@
+# -*- coding: utf-8 -*-
+# vim: ft=jinja
+
+# Start with defaults from defs.yaml 
+{% import_yaml 'intellij/defaults.yaml' as defs %}
+
+# Set OS deviations from defaults 
+{% set osmap = salt['grains.filter_by']({
+
+        'MacOS':  { 'prefix' : '/Applications/IntelliJ IDEA',
+                    'homes'  : '/Users',
+                    'command': '/idea',
+                    'osflavour': 'mac',
+        },
+        'Windows':{ 'prefix' : 'C:\\Program files',
+                    'homes'  : 'C:\\Users',
+                    'command': '\\idea.exe',
+                    'symlink': 'C:\\intellij\\intellij',
+                    'symhome': 'C:\\intellij',
+                    'osflavour': 'windows',
+        },
+  }
+  , grain="os"
+  , merge=defs
+  , base="intellij"
+ )
+%}
+
+# Merge osmap onto default settings before merging pillars.
+{% do defs.intellij.update(osmap) %}
+{% set ide = salt['pillar.get']( 'intellij', default=defs.intellij, merge=True) %}
+
+# Set Jetbrains IDE latest release details
+{%- set pcode = ide.jetbrains.product ~ ide.jetbrains.edition %}
+{%- set jdata = salt['cmd.run']('curl {0} -s {1}{2}'.format(ide.dl.opts, ide.jetbrains.uri, pcode))|load_yaml %}
+
+{%- if grains.os == 'MacOS' %}
+  {%- set _home = '{0} {1}E.app/Contents/MacOS'.format(ide.prefix, ide.jetbrains.edition) %}
+{% else %}
+  {%- set _home = '{0}/intellij-{1}-{2}'.format( ide.prefix, ide.jetbrains.edition,
+                                                   jdata[ pcode ][0]['version'],) %}
+{% endif %}
+{% do ide.alt.update({ 'realhome': _home, 'realcmd': _home ~ ide.command },) %}
+
+# Set Jetbrains IDE download details
+{%- set src_hashurl = jdata[ pcode ][0]['downloads'][ ide.osflavour ]['checksumLink'] %}
+{%- set src_hashsum  = salt['cmd.run']('curl -s {0}'.format( src_hashurl )).split(' ')[0] %}
+{% do ide.dl.update({
+       'source_url'  : jdata[ pcode ][0]['downloads'][ ide.osflavour ]['link'],
+       'archive_name': jdata[ pcode ][0]['downloads'][ ide.osflavour ]['link'].split('/') | last ,
+       'src_hashurl' : src_hashurl,
+       'src_hashsum' : src_hashsum,
+       'unpack_opts' : ' -z -C ' ~  _home ~ ' --strip-components=1' },
+    )
+%}
+
+{% set intellij = ide %}
+

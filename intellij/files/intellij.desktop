@@ -3,6 +3,6 @@ Encoding=UTF-8
 Name=IDEA IntelliJ
 Comment=JetBrains IntelliJ IDEA (Java IDE)
 Icon=/opt/intellij/bin/idea.png
-Exec=idea.sh
+Exec={{ home }}/{{ command }}
 Terminal=false
 Type=Application
