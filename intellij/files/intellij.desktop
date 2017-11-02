@@ -1,6 +1,6 @@
 [Desktop Entry]
 Encoding=UTF-8
-Name=Jetbrains IDEA IntelliJ {{ edition }} edition
+Name=Jetbrains IDEA IntelliJ {{ edition }}E
 Comment=JetBrains IntelliJ IDEA (Java IDE)
 Icon={{ home }}/{{ command.split('.')[0] }}.png
 Exec={{ home }}/{{ command }}

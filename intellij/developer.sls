@@ -26,11 +26,11 @@ intellij-desktop-shortcut-add:
     - runas: {{ intellij.prefs.user }}
     - require:
       - file: intellij-desktop-shortcut-add
-   {% else %}
+   {% elif grains.os not in ('Windows') %}
    #Linux
   file.managed:
     - source: salt://intellij/files/intellij.desktop
-    - name: {{ intellij.homes }}/{{ intellij.prefs.user }}/Desktop/intellij{{ intellij.jetbrains.edition }}.desktop
+    - name: {{ intellij.homes }}/{{ intellij.prefs.user }}/Desktop/intellij{{ intellij.jetbrains.edition }}E.desktop
     - user: {{ intellij.prefs.user }}
     - makedirs: True
       {% if salt['grains.get']('os_family') in ('Suse') %} 
@@ -45,6 +45,7 @@ intellij-desktop-shortcut-add:
     - context:
       home: {{ intellij.jetbrains.realhome }}
       command: {{ intellij.command }}
+      edition: {{ intellij.jetbrains.edition }}
    {% endif %}
 
 
