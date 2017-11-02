@@ -2,7 +2,7 @@
 intellij
 ========
 
-Formula to set up and configure Jetbrains IntelliJ IDEA from a tarball archive sourced via URL.
+Formula for latest IntelliJ IDE from Jetbrains. Supports both 'Community' (default), and 'Ultimate' editions.
 
 .. note::
 
@@ -17,26 +17,26 @@ Available states
 
 ``intellij``
 ------------
-
-Downloads the tarball from the intellij:source_url configured as either a pillar or grain and will not do anything
-if source_url is omitted. Then unpacks the archive into intellij:prefix (defaults to /usr/share/java/intellij).
+Downloads the archive from Jetbrains website, unpacks locally and installs the IDE on the Operating System.  On Linux, the PATH is set for all system users by adding software profile to /etc/profile.d/ directory.
 
 .. note::
 
-Jetbrains do rolling releases of intellij community edition so 'intellij' pillars need to be updated regularly, unless you maintain your own mirror.
-
-
-``intellij.env``
-------------
-Places a intellij profile in /etc/profile.d - this way the PATH is set correctly for all system users.
-Optionally download preferences from a central location, saving in /home/'default_user'.
-
+This formula automatically installs latest Jetbrains release. This behaviour may be overridden in pillars.
 
 ``intellij.alternatives``
 ------------
-Full support for linux alternatives system. This state is not applicable for Archlinux and derivatives.
+Full support for debian alternatives in supported Linux distributions (i.e. not Archlinux, Windows, MacOS). 
+
+.. note::
+
+The linux-alternatives 'priority' pillar value must be updated for each newly installed release/editions.
+
+
+``intellij.developer``
+------------
+Create Desktop shortcuts. Optionally get preferences file from url/share and save into 'user' (pillar) home directory.
 
 
 Please see the pillar.example for configuration.
 
-Tested on Ubuntu, Fedora, Arch, and Suse.
+Tested on Linux (Ubuntu, Fedora, Arch, and Suse), MacOS. Not verified on Windows OS.

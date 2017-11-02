@@ -1,8 +1,8 @@
 [Desktop Entry]
 Encoding=UTF-8
-Name=IDEA IntelliJ
+Name=Jetbrains IDEA IntelliJ {{ edition }} edition
 Comment=JetBrains IntelliJ IDEA (Java IDE)
-Icon=/opt/intellij/bin/idea.png
-Exec=idea.sh
+Icon={{ home }}/{{ command.split('.')[0] }}.png
+Exec={{ home }}/{{ command }}
 Terminal=false
 Type=Application

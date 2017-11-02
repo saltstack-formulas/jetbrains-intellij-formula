@@ -1,19 +1,21 @@
-{%- from 'intellij/settings.sls' import intellij with context %}
+{% from "intellij/map.jinja" import intellij with context %}
 
-#Note: alternatives state is unsupported by Archlinux & derivatives.
+{% if grains.os not in ('MacOS', 'Windows') %}
+
+  {% if grains.os_family not in ('Arch') %}
 
 # Add intelliJhome to alternatives system
 intellij-home-alt-install:
   alternatives.install:
     - name: intellijhome
-    - link: {{ intellij.intellij_home }}
-    - path: {{ intellij.real_home }}
-    - priority: {{ intellij.alt_priority }}
+    - link: {{ intellij.symhome }}
+    - path: {{ intellij.alt.realhome }}
+    - priority: {{ intellij.alt.priority }}
 
 intellij-home-alt-set:
   alternatives.set:
     - name: intellijhome
-    - path: {{ intellij.real_home }}
+    - path: {{ intellij.alt.realhome }}
     - onchanges:
       - alternatives: intellij-home-alt-install
 
@@ -22,8 +24,8 @@ intellij-alt-install:
   alternatives.install:
     - name: intellij
     - link: {{ intellij.symlink }}
-    - path: {{ intellij.realcmd }}
-    - priority: {{ intellij.alt_priority }}
+    - path: {{ intellij.alt.realcmd }}
+    - priority: {{ intellij.alt.priority }}
     - require:
       - alternatives: intellij-home-alt-install
       - alternatives: intellij-home-alt-set
@@ -31,7 +33,10 @@ intellij-alt-install:
 intellij-alt-set:
   alternatives.set:
     - name: intellij
-    - path: {{ intellij.realcmd }}
+    - path: {{ intellij.alt.realcmd }}
     - onchanges:
       - alternatives: intellij-alt-install
 
+  {% endif %}
+
+{% endif %}
