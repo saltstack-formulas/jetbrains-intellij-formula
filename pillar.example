@@ -1,13 +1,17 @@
 intellij:
   jetbrains:
+    #See https://www.jetbrains.com/help/idea/meet-intellij-idea.html
     #Default edition 'C' (community) or 'U' (Ultimate).
     edition: C
-  alt:
-    #Important: Increase priority for every version/edition installation
-    priority: 190
+  linux:
+    #Increase priority for every version/edition installation
+    altpriority: 190
   dl:
     retries: 1
     interval: 30
   prefs:
     user: undefined_user
- 
+    #See https://www.jetbrains.com/help/idea/exporting-and-importing-settings.html
+    jarurl:
+    jardir:
+    jarfile: intellij-settings.jar

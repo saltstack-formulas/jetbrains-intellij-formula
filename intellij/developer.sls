@@ -1,6 +1,6 @@
 {% from "intellij/map.jinja" import intellij with context %}
 
-{% if intellij.prefs.user not in (None, 'undefined_user') %}
+{% if intellij.prefs.user not in (None, 'undfined', 'undefined_user') %}
 
   {% if grains.os == 'MacOS' %}
 intellij-desktop-shortcut-clean:
@@ -27,6 +27,7 @@ intellij-desktop-shortcut-add:
     - require:
       - file: intellij-desktop-shortcut-add
    {% else %}
+   #Linux
   file.managed:
     - source: salt://intellij/files/intellij.desktop
     - name: {{ intellij.homes }}/{{ intellij.prefs.user }}/Desktop/intellij{{ intellij.jetbrains.edition }}.desktop
@@ -40,24 +41,24 @@ intellij-desktop-shortcut-add:
     - mode: 644
     - force: True
     - template: jinja
-    - onlyif: test -f {{ intellij.symhome }}/{{ intellij.command }}
+    - onlyif: test -f {{ intellij.jetbrains.realcmd }}
     - context:
-      home: {{ intellij.symhome }}
+      home: {{ intellij.jetbrains.realhome }}
       command: {{ intellij.command }}
    {% endif %}
 
 
-  {% if intellij.prefs.importurl or intellij.prefs.importdir %}
+  {% if intellij.prefs.jarurl or intellij.prefs.jardir %}
 
 intellij-prefs-importfile:
-   {% if intellij.prefs.importdir %}
+   {% if intellij.prefs.jardir %}
   file.managed:
-    - onlyif: test -f {{ intellij.prefs.importdir }}/{{ intellij.prefs.jarfile }}
+    - onlyif: test -f {{ intellij.prefs.jardir }}/{{ intellij.prefs.jarfile }}
     - name: {{ intellij.homes }}/{{ intellij.prefs.user }}/{{ intellij.prefs.jarfile }}
-    - source: {{ intellij.prefs.importdir }}/{{ intellij.prefs.jarfile }}
+    - source: {{ intellij.prefs.jardir }}/{{ intellij.prefs.jarfile }}
     - user: {{ intellij.prefs.user }}
     - makedirs: True
-        {% if salt['grains.get']('os_family') in ('Suse') %}
+        {% if grains.os_family in ('Suse') %}
     - group: users
         {% elif grains.os not in ('MacOS') %}
         #inherit Darwin ownership
@@ -66,7 +67,7 @@ intellij-prefs-importfile:
     - if_missing: {{ intellij.homes }}/{{ intellij.prefs.user }}/{{ intellij.prefs.jarfile }}
    {% else %}
   cmd.run:
-    - name: curl -o {{intellij.homes}}/{{intellij.prefs.user}}/{{intellij.prefs.jarfile}} {{intellij.prefs.importurl}}
+    - name: curl -o {{intellij.homes}}/{{intellij.prefs.user}}/{{intellij.prefs.jarfile}} {{intellij.prefs.jarurl}}
     - runas: {{ intellij.prefs.user }}
     - if_missing: {{ intellij.homes }}/{{ intellij.prefs.user }}/{{ intellij.prefs.jarfile }}
    {% endif %}
