@@ -5,16 +5,14 @@ intellij-remove-prev-archive:
   file.absent:
     - name: '{{ intellij.tmpdir }}/{{ intellij.dl.archive_name }}'
     - require_in:
-      - intellij-install-dir
+      - intellij-extract-dirs
 
-intellij-install-dir:
+intellij-extract-dirs:
   file.directory:
     - names:
       - '{{ intellij.tmpdir }}'
 {% if grains.os not in ('MacOS', 'Windows') %}
-      - '{{ intellij.alt.realhome }}'
-      - '{{ intellij.prefix }}'
-      - '{{ intellij.symhome }}'
+      - '{{ intellij.jetbrains.realhome }}'
     - user: root
     - group: root
     - mode: 755
@@ -58,13 +56,14 @@ intellij-package-install:
     - force: True
     - allow_untrusted: True
 {% else %}
+  # Linux
   archive.extracted:
     - source: 'file://{{ intellij.tmpdir }}/{{ intellij.dl.archive_name }}'
-    - name: '{{ intellij.alt.realhome }}'
+    - name: '{{ intellij.jetbrains.realhome }}'
     - archive_format: {{ intellij.dl.archive_type }}
        {% if grains['saltversioninfo'] < [2016, 11, 0] %}
     - tar_options: {{ intellij.dl.unpack_opts }}
-    - if_missing: '{{ intellij.alt.realcmd }}'
+    - if_missing: '{{ intellij.jetbrains.realcmd }}'
        {% else %}
     - options: {{ intellij.dl.unpack_opts }}
        {% endif %}
@@ -82,10 +81,7 @@ intellij-package-install:
 
 intellij-remove-archive:
   file.absent:
-    - names:
-      # todo: maybe just delete the tmpdir itself
-      - '{{ intellij.tmpdir }}/{{ intellij.dl.archive_name }}'
-      - '{{ intellij.tmpdir }}/{{ intellij.dl.archive_name }}.sha256'
+    - name: '{{ intellij.tmpdir }}'
     - onchanges:
 {%- if grains.os in ('Windows') %}
       - pkg: intellij-package-install
@@ -94,25 +90,5 @@ intellij-remove-archive:
 {% else %}
       #Unix
       - archive: intellij-package-install
-
-intellij-home-symlink:
-  file.symlink:
-    - name: '{{ intellij.symhome }}'
-    - target: '{{ intellij.alt.realhome }}'
-    - force: True
-    - onchanges:
-      - archive: intellij-package-install
-
-# Update system profile with PATH
-intellij-config:
-  file.managed:
-    - name: /etc/profile.d/intellij.sh
-    - source: salt://intellij/files/intellij.sh
-    - template: jinja
-    - mode: 644
-    - user: root
-    - group: root
-    - context:
-      intellij_home: '{{ intellij.symhome }}'
 
 {% endif %}

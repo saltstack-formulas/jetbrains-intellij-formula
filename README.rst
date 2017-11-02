@@ -17,26 +17,25 @@ Available states
 
 ``intellij``
 ------------
-Downloads the archive from Jetbrains website, unpacks locally and installs the IDE on the Operating System.  On Linux, the PATH is set for all system users by adding software profile to /etc/profile.d/ directory.
+Downloads the archive from Jetbrains website, unpacks locally and installs the IDE on the Operating System.
 
 .. note::
 
-This formula automatically installs latest Jetbrains release. This behaviour may be overridden in pillars.
-
-``intellij.alternatives``
-------------
-Full support for debian alternatives in supported Linux distributions (i.e. not Archlinux, Windows, MacOS). 
-
-.. note::
-
-The linux-alternatives 'priority' pillar value must be updated for each newly installed release/editions.
-
+This formula automatically installs latest Jetbrains release. This behaviour may be overridden by pillars.
 
 ``intellij.developer``
 ------------
 Create Desktop shortcuts. Optionally get preferences file from url/share and save into 'user' (pillar) home directory.
 
 
-Please see the pillar.example for configuration.
+``intellij.linuxenv``
+------------
+On Linux, the PATH is set for all system users by adding software profile to /etc/profile.d/ directory.  Full support for debian alternatives in supported Linux distributions (i.e. not Archlinux).
 
+.. note::
+
+The linux-alternatives 'priority' pillar value must be updated for each newly installed release/editions.
+
+
+Please see the pillar.example for configuration.
 Tested on Linux (Ubuntu, Fedora, Arch, and Suse), MacOS. Not verified on Windows OS.
