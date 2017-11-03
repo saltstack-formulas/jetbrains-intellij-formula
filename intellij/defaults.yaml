@@ -24,8 +24,9 @@ intellij:
     src_hashsum:
 
   linux:
-    altpriority: 170
     symlink: /usr/bin/intellij
+    #debian alternatives is disabled by default. Activated via pillar value.
+    altpriority: 0
 
   prefs:
     user: undefined_user

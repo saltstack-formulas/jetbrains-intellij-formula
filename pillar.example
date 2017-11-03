@@ -4,8 +4,9 @@ intellij:
     #Default edition 'C' (community) or 'U' (Ultimate).
     edition: C
   linux:
-    #Increase priority for every version/edition installation
-    altpriority: 190
+    #Enable Debian alternatives feature by setting nonzero 'altpriority' value here.
+    #Increase same value on each subsequent software installation.
+    #altpriority: 170
   dl:
     retries: 1
     interval: 30
