@@ -11,6 +11,7 @@ intellij-extract-dirs:
   file.directory:
     - names:
       - '{{ intellij.tmpdir }}'
+      - '{{ intellij.jetbrains.home }}'
 {% if grains.os not in ('MacOS', 'Windows') %}
       - '{{ intellij.jetbrains.realhome }}'
     - user: root
