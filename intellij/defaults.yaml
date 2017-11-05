@@ -29,7 +29,7 @@ intellij:
     altpriority: 0
 
   prefs:
-    user: undefined_user
+    user:
     #See https://www.jetbrains.com/help/idea/exporting-and-importing-settings.html
     jarurl:
     jardir:

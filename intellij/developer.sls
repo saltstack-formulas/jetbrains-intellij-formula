@@ -1,6 +1,6 @@
 {% from "intellij/map.jinja" import intellij with context %}
 
-{% if intellij.prefs.user not in (None, 'undfined', 'undefined_user') %}
+{% if intellij.prefs.user not in (None, 'undefined_user', 'undefined', '') %}
 
   {% if grains.os == 'MacOS' %}
 intellij-desktop-shortcut-clean:
