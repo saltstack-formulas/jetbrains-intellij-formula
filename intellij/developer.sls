@@ -1,6 +1,6 @@
 {% from "intellij/map.jinja" import intellij with context %}
 
-{% if intellij.prefs.user not in (None, 'undefined_user', 'undefined', '') %}
+{% if intellij.prefs.user not in (None, 'undefined_user', 'undefined', '',) %}
 
   {% if grains.os == 'MacOS' %}
 intellij-desktop-shortcut-clean:
@@ -26,14 +26,14 @@ intellij-desktop-shortcut-add:
     - runas: {{ intellij.prefs.user }}
     - require:
       - file: intellij-desktop-shortcut-add
-   {% elif grains.os not in ('Windows') %}
+   {% elif grains.os not in ('Windows',) %}
    #Linux
   file.managed:
     - source: salt://intellij/files/intellij.desktop
     - name: {{ intellij.homes }}/{{ intellij.prefs.user }}/Desktop/intellij{{ intellij.jetbrains.edition }}E.desktop
     - user: {{ intellij.prefs.user }}
     - makedirs: True
-      {% if salt['grains.get']('os_family') in ('Suse') %} 
+      {% if salt['grains.get']('os_family') in ('Suse',) %} 
     - group: users
       {% else %}
     - group: {{ intellij.prefs.user }}
@@ -59,9 +59,9 @@ intellij-prefs-importfile:
     - source: {{ intellij.prefs.jardir }}/{{ intellij.prefs.jarfile }}
     - user: {{ intellij.prefs.user }}
     - makedirs: True
-        {% if grains.os_family in ('Suse') %}
+        {% if grains.os_family in ('Suse',) %}
     - group: users
-        {% elif grains.os not in ('MacOS') %}
+        {% elif grains.os not in ('MacOS',) %}
         #inherit Darwin ownership
     - group: {{ intellij.prefs.user }}
         {% endif %}

@@ -1,6 +1,6 @@
 {% from "intellij/map.jinja" import intellij with context %}
 
-{% if grains.os not in ('MacOS', 'Windows') %}
+{% if grains.os not in ('MacOS', 'Windows',) %}
 
 intellij-home-symlink:
   file.symlink:
@@ -23,7 +23,7 @@ intellij-config:
 
   # Debian alternatives
   {% if intellij.linux.altpriority > 0 %}
-     {% if grains.os_family not in ('Arch') %}
+     {% if grains.os_family not in ('Arch',) %}
 
 # Add intelliJhome to alternatives system
 intellij-home-alt-install:

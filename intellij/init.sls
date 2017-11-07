@@ -12,7 +12,7 @@ intellij-extract-dirs:
     - names:
       - '{{ intellij.tmpdir }}'
       - '{{ intellij.jetbrains.home }}'
-{% if grains.os not in ('MacOS', 'Windows') %}
+{% if grains.os not in ('MacOS', 'Windows',) %}
       - '{{ intellij.jetbrains.realhome }}'
     - user: root
     - group: root
@@ -34,7 +34,7 @@ intellij-download-archive:
 {%- if intellij.dl.src_hashsum %}
    # Check local archive using hashstring for older Salt / MacOS.
    # (see https://github.com/saltstack/salt/pull/41914).
-  {%- if grains['saltversioninfo'] <= [2016, 11, 6] or grains.os in ('MacOS') %}
+  {%- if grains['saltversioninfo'] <= [2016, 11, 6] or grains.os in ('MacOS',) %}
 intellij-check-archive-hash:
    module.run:
      - name: file.check_hash
@@ -84,9 +84,9 @@ intellij-remove-archive:
   file.absent:
     - name: '{{ intellij.tmpdir }}'
     - onchanges:
-{%- if grains.os in ('Windows') %}
+{%- if grains.os in ('Windows',) %}
       - pkg: intellij-package-install
-{%- elif grains.os in ('MacOS') %}
+{%- elif grains.os in ('MacOS',) %}
       - macpackage: intellij-package-install
 {% else %}
       #Unix
