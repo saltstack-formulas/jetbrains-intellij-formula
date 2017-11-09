@@ -35,7 +35,8 @@ intellij-desktop-shortcut-add:
     - makedirs: True
       {% if salt['grains.get']('os_family') in ('Suse',) %} 
     - group: users
-      {% else %}
+      {% elif grains.os not in ('MacOS',) %}
+        #inherit Darwin group ownership
     - group: {{ intellij.prefs.user }}
       {% endif %}
     - mode: 644
@@ -62,7 +63,7 @@ intellij-prefs-importfile:
         {% if grains.os_family in ('Suse',) %}
     - group: users
         {% elif grains.os not in ('MacOS',) %}
-        #inherit Darwin ownership
+        #inherit Darwin group ownership
     - group: {{ intellij.prefs.user }}
         {% endif %}
     - if_missing: {{ intellij.homes }}/{{ intellij.prefs.user }}/{{ intellij.prefs.jarfile }}
