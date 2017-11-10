@@ -19,6 +19,7 @@ intellij-extract-dirs:
     - mode: 755
 {% endif %}
     - makedirs: True
+    - clean: True
     - require_in:
       - intellij-download-archive
 
