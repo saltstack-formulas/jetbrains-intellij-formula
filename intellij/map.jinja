@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 # vim: ft=jinja
 
-# Start with defaults from defs.yaml 
+# Start with defaults, merge osmapping, then pillars.
+
 {% import_yaml 'intellij/defaults.yaml' as defs %}
-
-# Set OS deviations from defaults 
 {% set osmap = salt['grains.filter_by']({
-
         'MacOS':  { 'prefix' : '/Applications/IntelliJ IDEA',
                     'homes'  : '/Users',
                     'command': '/idea',
@@ -18,34 +16,31 @@
                     'command': '\\idea.exe',
                     'osflavour': 'windows',
         },
-  }, grain="os", merge=defs, base="intellij")
-%}
-
-# Merge osmap onto default settings before merging pillars.
+  }, grain="os",
+) %}
 {% do defs.intellij.update(osmap) %}
 {% set ide = salt['pillar.get']( 'intellij', default=defs.intellij, merge=True) %}
 
-# Set Jetbrains IDE latest release details
+# Get dynamic release metadata
 {%- set pcode = ide.jetbrains.product ~ ide.jetbrains.edition %}
 {%- set jdata = salt['cmd.run']('curl {0} -s {1}{2}'.format(ide.dl.opts, ide.jetbrains.uri, pcode))|load_yaml %}
 
+# Extract download details
+{%- set _home = '{0}/intellij-{1}-{2}'.format( ide.prefix, ide.jetbrains.edition, jdata[ pcode ][0]['version'],) %}
 {%- if grains.os == 'MacOS' %}
   {%- set _home = '{0} {1}E.app/Contents/MacOS'.format(ide.prefix, ide.jetbrains.edition) %}
-{% else %}
-  {%- set _home = '{0}/intellij-{1}-{2}'.format( ide.prefix, ide.jetbrains.edition,
-                                                   jdata[ pcode ][0]['version'],) %}
 {% endif %}
-{% do ide.jetbrains.update({ 'realhome': _home, 'realcmd' : _home ~ ide.command },) %}
-
 {%- set src_hashurl = jdata[ pcode ][0]['downloads'][ ide.osflavour ]['checksumLink'] %}
 {%- set src_hashsum  = salt['cmd.run']('curl -s {0}'.format( src_hashurl )).split(' ')[0] %}
+
+# Update dynamic parameters
+{% do ide.jetbrains.update({ 'realhome': _home, 'realcmd' : _home ~ ide.command },) %}
 {% do ide.dl.update({
        'source_url'  : jdata[ pcode ][0]['downloads'][ ide.osflavour ]['link'],
        'archive_name': jdata[ pcode ][0]['downloads'][ ide.osflavour ]['link'].split('/') | last ,
        'src_hashurl' : src_hashurl,
        'src_hashsum' : src_hashsum,
        'unpack_opts' : ' -z -C ' ~  _home ~ ' --strip-components=1' },
-    )
-%}
+) %}
 {% set intellij = ide %}
 
