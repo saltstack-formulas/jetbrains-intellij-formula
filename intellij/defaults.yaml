@@ -1,7 +1,7 @@
 #Default Look Dictionary
 
 intellij:
-  prefix: /usr/lib/jetbrains
+  prefix: /usr/local/jetbrains
   tmpdir: /tmp/jetbrainstmp
   command: /bin/idea.sh
   homes: /home
