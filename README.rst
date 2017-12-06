@@ -1,5 +1,5 @@
 ========
-intellij
+jetbrains intellij
 ========
 
 Formula for latest IntelliJ IDE from Jetbrains. Supports both 'Community' (default), and 'Ultimate' editions.
