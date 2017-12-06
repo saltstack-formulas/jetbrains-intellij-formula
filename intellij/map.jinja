@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 # vim: ft=jinja
 
-# Start with defaults, merge osmapping, then pillars.
-
-{% import_yaml 'intellij/defaults.yaml' as defs %}
 {% set osmap = salt['grains.filter_by']({
+        'default':{
+        },
         'MacOS':  { 'prefix' : '/Applications/IntelliJ IDEA',
                     'homes'  : '/Users',
                     'command': '/idea',
@@ -18,6 +17,9 @@
         },
   }, grain="os",
 ) %}
+
+# Start with defaults, merge osmapping, then pillars.
+{% import_yaml 'intellij/defaults.yaml' as defs %}
 {% do defs.intellij.update(osmap) %}
 {% set ide = salt['pillar.get']( 'intellij', default=defs.intellij, merge=True) %}
 
