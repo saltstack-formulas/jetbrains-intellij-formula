@@ -35,6 +35,12 @@
 {%- set src_hashurl = jdata[ pcode ][0]['downloads'][ ide.osflavour ]['checksumLink'] %}
 {%- set src_hashsum  = salt['cmd.run']('curl -s {0}'.format( src_hashurl )).split(' ')[0] %}
 
+# Get user's group name from pillar or 'id' command
+{%- if not ide.prefs.group %}
+  {%- set usergroup = salt['cmd.run']('id -gn', runas=intellij.prefs.user, output_loglevel='quiet',) or None %}
+  {%- do ide.prefs.update({'group': usergroup,}) %}
+{%- endif %}
+ 
 # Update dynamic parameters
 {% do ide.jetbrains.update({ 'realhome': _home, 'realcmd' : _home ~ ide.command },) %}
 {% do ide.dl.update({

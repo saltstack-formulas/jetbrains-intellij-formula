@@ -1,17 +1,16 @@
 {% from "intellij/map.jinja" import intellij with context %}
 
-{% if intellij.prefs.user not in (None, 'undefined_user', 'undefined', '',) %}
+{% if intellij.prefs.user %}
+   {% if grains.os not in ('Windows',) %}
 
-  {% if grains.os == 'MacOS' %}
 intellij-desktop-shortcut-clean:
   file.absent:
     - name: '{{ intellij.homes }}/{{ intellij.prefs.user }}/Desktop/IntelliJ IDEA {{ intellij.jetbrains.edition }}E'
     - require_in:
       - file: intellij-desktop-shortcut-add
-  {% endif %}
+    - onlyif: test "`uname`" = "Darwin"
 
 intellij-desktop-shortcut-add:
-  {% if grains.os == 'MacOS' %}
   file.managed:
     - name: /tmp/mac_shortcut.sh
     - source: salt://intellij/files/mac_shortcut.sh
@@ -21,24 +20,25 @@ intellij-desktop-shortcut-add:
       user: {{ intellij.prefs.user }}
       homes: {{ intellij.homes }}
       edition: {{ intellij.jetbrains.edition }}
+    - onlyif: test "`uname`" = "Darwin"
   cmd.run:
     - name: /tmp/mac_shortcut.sh {{ intellij.jetbrains.edition }}
     - runas: {{ intellij.prefs.user }}
     - require:
       - file: intellij-desktop-shortcut-add
-   {% elif grains.os not in ('Windows',) %}
-   #Linux
+    - require_in:
+      - file: intellij-desktop-shortcut-install
+    - onlyif: test "`uname`" = "Darwin"
+
+intellij-desktop-shortcut-install:
   file.managed:
     - source: salt://intellij/files/intellij.desktop
     - name: {{ intellij.homes }}/{{ intellij.prefs.user }}/Desktop/intellij{{ intellij.jetbrains.edition }}E.desktop
     - user: {{ intellij.prefs.user }}
+       {% if intellij.prefs.group and grains.os not in ('MacOS',) %}
+    - group: {{ intellij.prefs.group }}
+       {% endif %}
     - makedirs: True
-      {% if salt['grains.get']('os_family') in ('Suse',) %} 
-    - group: users
-      {% elif grains.os not in ('MacOS',) %}
-        #inherit Darwin group ownership
-    - group: {{ intellij.prefs.user }}
-      {% endif %}
     - mode: 644
     - force: True
     - template: jinja
@@ -49,30 +49,24 @@ intellij-desktop-shortcut-add:
       edition: {{ intellij.jetbrains.edition }}
    {% endif %}
 
-
   {% if intellij.prefs.jarurl or intellij.prefs.jardir %}
 
 intellij-prefs-importfile:
-   {% if intellij.prefs.jardir %}
   file.managed:
     - onlyif: test -f {{ intellij.prefs.jardir }}/{{ intellij.prefs.jarfile }}
     - name: {{ intellij.homes }}/{{ intellij.prefs.user }}/{{ intellij.prefs.jarfile }}
     - source: {{ intellij.prefs.jardir }}/{{ intellij.prefs.jarfile }}
     - user: {{ intellij.prefs.user }}
     - makedirs: True
-        {% if grains.os_family in ('Suse',) %}
-    - group: users
-        {% elif grains.os not in ('MacOS',) %}
-        #inherit Darwin group ownership
-    - group: {{ intellij.prefs.user }}
-        {% endif %}
+       {% if intellij.prefs.group and grains.os not in ('MacOS',) %}
+    - group: {{ intellij.prefs.group }}
+       {% endif %}
     - if_missing: {{ intellij.homes }}/{{ intellij.prefs.user }}/{{ intellij.prefs.jarfile }}
-   {% else %}
   cmd.run:
+    - unless: test -f {{ intellij.prefs.jardir }}/{{ intellij.prefs.jarfile }}
     - name: curl -o {{intellij.homes}}/{{intellij.prefs.user}}/{{intellij.prefs.jarfile}} {{intellij.prefs.jarurl}}
     - runas: {{ intellij.prefs.user }}
     - if_missing: {{ intellij.homes }}/{{ intellij.prefs.user }}/{{ intellij.prefs.jarfile }}
-   {% endif %}
 
   {% endif %}
 
