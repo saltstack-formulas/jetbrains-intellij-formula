@@ -37,7 +37,7 @@
 
 # Get user's group name from pillar or 'id' command
 {%- if not ide.prefs.group %}
-  {%- set usergroup = salt['cmd.run']('id -gn', runas=intellij.prefs.user, output_loglevel='quiet',) or None %}
+  {%- set usergroup = salt['cmd.run']('id -gn', runas=ide.prefs.user, output_loglevel='quiet',) or None %}
   {%- do ide.prefs.update({'group': usergroup,}) %}
 {%- endif %}
  
