@@ -30,6 +30,7 @@ intellij:
 
   prefs:
     user:
+    group:
     #See https://www.jetbrains.com/help/idea/exporting-and-importing-settings.html
     jarurl:
     jardir:
