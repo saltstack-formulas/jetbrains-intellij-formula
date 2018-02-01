@@ -21,26 +21,25 @@ intellij-config:
     - context:
       home: '{{ intellij.jetbrains.home }}/intellij'
 
-  # Debian alternatives
-  {% if intellij.linux.altpriority > 0 %}
-     {% if grains.os_family not in ('Arch',) %}
+  # Linux alternatives
+  {% if intellij.linux.altpriority > 0 and grains.os_family not in ('Arch',) %}
 
 # Add intelliJhome to alternatives system
 intellij-home-alt-install:
   alternatives.install:
-    - name: intellijhome
+    - name: intellij-home
     - link: '{{ intellij.jetbrains.home }}/intellij'
     - path: '{{ intellij.jetbrains.realhome }}'
     - priority: {{ intellij.linux.altpriority }}
 
 intellij-home-alt-set:
   alternatives.set:
-    - name: intellijhome
+    - name: intellij-home
     - path: {{ intellij.jetbrains.realhome }}
     - onchanges:
       - alternatives: intellij-home-alt-install
 
-# Add intelli to alternatives system
+# Add to alternatives system
 intellij-alt-install:
   alternatives.install:
     - name: intellij
@@ -58,7 +57,6 @@ intellij-alt-set:
     - onchanges:
       - alternatives: intellij-alt-install
 
-      {% endif %}
   {% endif %}
 
 {% endif %}
