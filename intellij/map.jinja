@@ -1,27 +1,19 @@
 # -*- coding: utf-8 -*-
 # vim: ft=jinja
 
-{% set osmap = salt['grains.filter_by']({
-        'default':{
-        },
-        'MacOS':  { 'prefix' : '/Applications/IntelliJ IDEA',
-                    'homes'  : '/Users',
-                    'command': '/idea',
-                    'osflavour': 'mac',
-        },
-        'Windows':{ 'prefix' : 'C:\\Program files',
-                    'tmpdir' : 'C:\\temp\\jetbrainstmp\\',
-                    'homes'  : 'C:\\Users',
-                    'command': '\\idea.exe',
-                    'osflavour': 'windows',
-        },
-  }, grain="os",
-) %}
+{% import_yaml 'intellij/defaults.yaml' as defaults %}
+{% import_yaml "intellij/osmap.yaml" as osmap %}
 
-# Start with defaults, merge osmapping, then pillars.
-{% import_yaml 'intellij/defaults.yaml' as defs %}
-{% do defs.intellij.update(osmap) %}
-{% set ide = salt['pillar.get']( 'intellij', default=defs.intellij, merge=True) %}
+# start with defaults, merge osmap, then pillar data
+{% set ide = salt['grains.filter_by'](
+    defaults,
+    merge=salt['grains.filter_by'](
+        osmap,
+        grain='os',
+        merge=salt['pillar.get']('intellij', {}),
+    ),
+    base='intellij',
+) %}
 
 # Get dynamic release metadata
 {%- set pcode = ide.jetbrains.product ~ ide.jetbrains.edition %}
