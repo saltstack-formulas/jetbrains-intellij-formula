@@ -1,0 +1,13 @@
+
+MacOS:
+  prefix : '/Applications/IntelliJ IDEA'
+  homes  : '/Users'
+  command: '/idea'
+  osflavour: 'mac'
+
+Windows:
+  prefix: 'C:\\Program files\\Jetbrains\\'
+  tmpdir: 'C:\\temp\\jetbrainstmp\\'
+  homes: 'C:\\Users'
+  command: '\\idea.exe'
+  osflavour: 'windows'
