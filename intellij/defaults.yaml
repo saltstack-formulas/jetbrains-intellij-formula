@@ -28,6 +28,11 @@ intellij:
     #debian alternatives is disabled by default. Activated via pillar value.
     altpriority: 0
 
+    #On freedesktop.org-compliant desktops, enable Icon on Linux launchers.
+    #Place a .desktop file in e.g. /usr/share/applications
+    install_desktop_file: True
+    desktop_file: /usr/share/applications/intellij.desktop
+
   prefs:
     user:
     group:

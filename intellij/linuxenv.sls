@@ -59,4 +59,17 @@ intellij-alt-set:
 
   {% endif %}
 
+  {% if intellij.linux.install_desktop_file %}
+intellij-global-desktop-file:
+  file.managed:
+    - name: {{ intellij.linux.desktop_file }}
+    - source: salt://intellij/files/intellij.desktop
+    - template: jinja
+    - context:
+      home: {{ intellij.jetbrains.realhome }}
+      command: {{ intellij.command }}
+      edition: {{ intellij.jetbrains.edition }}
+    - onlyif: test -f {{ intellij.jetbrains.realhome }}/{{ intellij.command }}
+  {% endif %}
+
 {% endif %}
