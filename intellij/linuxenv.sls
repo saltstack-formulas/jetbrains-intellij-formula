@@ -31,6 +31,9 @@ intellij-home-alt-install:
     - link: '{{ intellij.jetbrains.home }}/intellij'
     - path: '{{ intellij.jetbrains.realhome }}'
     - priority: {{ intellij.linux.altpriority }}
+    - retry:
+        attempts: 3
+        until: True
 
 intellij-home-alt-set:
   alternatives.set:
@@ -38,6 +41,9 @@ intellij-home-alt-set:
     - path: {{ intellij.jetbrains.realhome }}
     - onchanges:
       - alternatives: intellij-home-alt-install
+    - retry:
+        attempts: 3
+        until: True
 
 # Add to alternatives system
 intellij-alt-install:
@@ -49,6 +55,9 @@ intellij-alt-install:
     - require:
       - alternatives: intellij-home-alt-install
       - alternatives: intellij-home-alt-set
+    - retry:
+        attempts: 3
+        until: True
 
 intellij-alt-set:
   alternatives.set:
@@ -56,6 +65,9 @@ intellij-alt-set:
     - path: {{ intellij.jetbrains.realcmd }}
     - onchanges:
       - alternatives: intellij-alt-install
+    - retry:
+        attempts: 3
+        until: True
 
   {% endif %}
 
