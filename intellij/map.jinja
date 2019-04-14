@@ -16,7 +16,8 @@
 ) %}
 
 # Get dynamic release metadata
-{%- set pcode = ide.jetbrains.product ~ ide.jetbrains.edition %}
+{%- set pcode = ide.jetbrains.product %}
+{%- set pcode = pcode ~ ide.jetbrains.edition if ide.jetbrains.edition else pcode %}
 {%- set jdata = salt['cmd.run']('curl {0} -s {1}{2}'.format(ide.dl.opts, ide.jetbrains.uri, pcode))|load_yaml %}
 
 # Extract download details
