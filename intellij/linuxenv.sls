@@ -19,7 +19,7 @@ intellij-config:
     - user: root
     - group: root
     - context:
-      home: '{{ intellij.jetbrains.home }}/intellij'
+      home: '{{ intellij.jetbrains.home|json }}/intellij'
 
   # Linux alternatives
   {% if intellij.linux.altpriority > 0 and grains.os_family not in ('Arch',) %}
@@ -78,9 +78,9 @@ intellij-global-desktop-file:
     - source: salt://intellij/files/intellij.desktop
     - template: jinja
     - context:
-      home: {{ intellij.jetbrains.realhome }}
-      command: {{ intellij.command }}
-      edition: {{ intellij.jetbrains.edition }}
+      home: {{ intellij.jetbrains.realhome|json }}
+      command: {{ intellij.command|json }}
+      edition: {{ intellij.jetbrains.edition|json }}
     - onlyif: test -f {{ intellij.jetbrains.realhome }}/{{ intellij.command }}
   {% endif %}
 

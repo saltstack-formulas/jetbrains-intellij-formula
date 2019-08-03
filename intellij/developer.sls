@@ -17,9 +17,9 @@ intellij-desktop-shortcut-add:
     - mode: 755
     - template: jinja
     - context:
-      user: {{ intellij.prefs.user }}
-      homes: {{ intellij.homes }}
-      edition: {{ intellij.jetbrains.edition }}
+      user: {{ intellij.prefs.user|json }}
+      homes: {{ intellij.homes|json }}
+      edition: {{ intellij.jetbrains.edition|json }}
     - onlyif: test "`uname`" = "Darwin"
   cmd.run:
     - name: /tmp/mac_shortcut.sh {{ intellij.jetbrains.edition }}
@@ -44,9 +44,9 @@ intellij-desktop-shortcut-install:
     - template: jinja
     - onlyif: test -f {{ intellij.jetbrains.realcmd }}
     - context:
-      home: {{ intellij.jetbrains.realhome }}
-      command: {{ intellij.command }}
-      edition: {{ intellij.jetbrains.edition }}
+      home: {{ intellij.jetbrains.realhome|json }}
+      command: {{ intellij.command|json }}
+      edition: {{ intellij.jetbrains.edition|json }}
    {% endif %}
 
   {% if intellij.prefs.jarurl or intellij.prefs.jardir %}
@@ -71,4 +71,3 @@ intellij-prefs-importfile:
   {% endif %}
 
 {% endif %}
-
