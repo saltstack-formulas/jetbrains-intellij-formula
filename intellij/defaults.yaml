@@ -5,7 +5,7 @@ intellij:
   tmpdir: /tmp/jetbrainstmp
   command: /bin/idea.sh
   homes: /home
-  osflavour: linuxWithoutJDK
+  osflavour: linuxWithoutJBR  #previously called linuxWithoutJDK
 
   jetbrains:
     home: /opt/jetbrains
