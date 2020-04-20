@@ -10,7 +10,7 @@ intellij-macos-app-clean-files:
   file.absent:
     - names:
       - {{ intellij.dir.tmp }}
-      - /Applications/{{ intellij.dir.name }}.app
+      - /Applications/{{ intellij.pkg.name }}.app
 
     {%- else %}
 

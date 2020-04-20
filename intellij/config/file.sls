@@ -29,9 +29,9 @@ intellij-config-file-managed-config_file:
     - template: jinja
     - context:
               {%- if intellij.pkg.use_upstream_macapp %}
-        path: {{ intellij.pkg.macapp.name }}
+        path: {{ intellij.pkg.macapp.path }}
               {%- else %}
-        path: {{ intellij.pkg.archive.name }}
+        path: {{ intellij.pkg.archive.path }}
               {%- endif %}
         config: {{ intellij.config|json }}
     - require:

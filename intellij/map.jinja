@@ -22,15 +22,17 @@
 {%- do intellij.update({ 'version': jdata[ pcode ][0]['version'] }) %}
 
 {%- set dirname = 'intellij-%s-%s'|format( intellij.edition, intellij.version) %}
-{%- set url = jdata[ pcode ][0]['downloads'][ intellij.pkg.tag ]['link'] %}
-{%- set hash  = salt['cmd.run']('curl -L -s {0}'.format( jdata[ pcode ][0]['downloads'][ intellij.pkg.tag ]['checksumLink'])).split(' ')[0] %}  # noqa 204
+{%- set url = jdata[ pcode ][0]['downloads'][ intellij.flavour ]['link'] %}
+{%- set hash  = salt['cmd.run']('curl -L -s {0}'.format( jdata[ pcode ][0]['downloads'][ intellij.flavour ]['checksumLink'])).split(' ')[0] %}  # noqa 204
 
 {%- if intellij.pkg.use_upstream_archive %}
        {%- do intellij.pkg.archive.update({'name': intellij.dir.archive ~ '/' ~ dirname,
+                                           'path': intellij.dir.archive ~ '/' ~ dirname,
                                            'source': url,
                                            'source_hash': hash }) %}
 {%- endif %}
 
 {%- if intellij.pkg.use_upstream_macapp %}
-       {%- do intellij.pkg.macapp.update({ 'name': '/Applications', 'source': url, 'source_hash': hash }) %}
+       {%- do intellij.pkg.macapp.update({
+              'name': '/Applications', 'path': '/Applications', 'source': url, 'source_hash': hash }) %}
 {%- endif %}

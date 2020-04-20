@@ -10,7 +10,7 @@ control 'intellij archive' do
     it { should exist }
   end
   # describe file('/usr/local/jetbrains/intellij-C-*/bin/idea.sh') do
-  #   it { should exist }
+  #    it { should exist }
   # end
   describe file('/usr/share/applications/intellij.desktop') do
     it { should exist }

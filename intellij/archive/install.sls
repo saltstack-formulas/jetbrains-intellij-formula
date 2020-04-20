@@ -11,7 +11,7 @@ intellij-package-archive-install:
     - require_in:
       - file: intellij-package-archive-install
   file.directory:
-    - name: {{ intellij.pkg.archive.name }}
+    - name: {{ intellij.pkg.archive.path }}
     - user: {{ intellij.identity.rootuser }}
     - group: {{ intellij.identity.rootgroup }}
     - mode: 755
@@ -39,7 +39,7 @@ intellij-package-archive-install:
 intellij-archive-install-file-symlink-intellij:
   file.symlink:
     - name: /usr/local/bin/intellij
-    - target: {{ intellij.pkg.archive.name }}/{{ intellij.command }}
+    - target: {{ intellij.pkg.archive.path }}/{{ intellij.command }}
     - force: True
     - onlyif: {{ grains.kernel|lower != 'windows' }}
     - require:

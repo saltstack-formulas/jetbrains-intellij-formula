@@ -3,7 +3,7 @@
 ---
 intellij:
   edition: C       # community
-  config: {}
+  flavour: linuxWithoutJBR
   environ:
     a: b
   pkg:

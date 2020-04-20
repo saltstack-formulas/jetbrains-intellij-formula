@@ -28,9 +28,9 @@ intellij-config-file-file-managed-environ_file:
     - template: jinja
     - context:
               {%- if intellij.pkg.use_upstream_macapp %}
-        path: {{ intellij.pkg.macapp.name }}/bin
+        path: '/Applications/{{ intellij.pkg.name|replace(' ','\ ') }}{{ '\ %sE'|format(edition) if edition else '' }}.app/Contents/MacOS'  # noqa 204
               {%- else %}
-        path: {{ intellij.pkg.archive.name }}/bin
+        path: {{ intellij.pkg.archive.path }}/bin
               {%- endif %}
         environ: {{ intellij.environ|json }}
     - require:

@@ -3,8 +3,13 @@
 ---
 intellij:
   edition: C       # community
+  flavour: linuxWithoutJBR
   environ:
     a: b
+  identity:
+    user: root
+  linux:
+    altpriority: 10000
   pkg:
     use_upstream_archive: true
     use_upstream_macapp: false
@@ -22,7 +27,3 @@ intellij:
         {%- elif grains.os_family == 'Arch' %}
       - jre-openjdk
         {%- endif %}
-  identity:
-    user: root
-  linux:
-    altpriority: 1000

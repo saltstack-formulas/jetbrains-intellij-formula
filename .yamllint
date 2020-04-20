@@ -13,8 +13,6 @@ ignore: |
   test/**/states/**/*.sls
   .kitchen/
   intellij/osfamilymap.yaml
-  intellij/files/default/shortcut.desktop.jinja
-  pillar.example
 
 yaml-files:
   # Default settings

@@ -1,7 +1,7 @@
 .. _readme:
 
 intellij-formula
-============
+================
 
 |img_travis| |img_sr|
 

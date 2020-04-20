@@ -8,5 +8,5 @@
 intellij-package-archive-clean-file-absent:
   file.absent:
     - names:
-      - {{ intellij.pkg.archive.name }}
+      - {{ intellij.pkg.archive.path }}
       - /usr/local/jetbrains/intellij-{{ intellij.edition }}-*

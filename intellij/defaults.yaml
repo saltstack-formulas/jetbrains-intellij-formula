@@ -6,8 +6,10 @@ intellij:
   release: latest
   version: latest
   edition: C       # community or U (ultimate)
+  flavour: linuxWithoutJBR
+
   command: /bin/idea.sh
-  config_file: None
+  config_file: null
   config: {}
   environ_file: /etc/default/intellij.sh
   environ: []
@@ -15,12 +17,10 @@ intellij:
   dir:
     archive: /usr/local/jetbrains
     homes: /home
-    tmp: /tmp/epp/intellij
-    name: 'Intellij IDEA'
+    tmp: /tmp/jetbrains/intellij
 
   pkg:
-    name: intellij
-    release: None
+    name: Intellij IDEA
     use_upstream_archive: true
     use_upstream_macapp: false
     deps:
@@ -29,13 +29,13 @@ intellij:
       - gzip
     repo: {}
     suffix: tar.gz
-    tag: linuxWithoutJBR
-    macapp: {}
+    macapp:
+      path: null
     archive:
-      name: None
+      path: null
       uri: 'https://data.services.jetbrains.com/products/releases?latest=true&code='
       # See https://www.jetbrains.com/help/idea/meet-intellij-idea.html
-      source_hash: None
+      source_hash: null
       enforce_toplevel: false
       trim_output: true
       options: '--strip-components=1'
