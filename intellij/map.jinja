@@ -1,47 +1,36 @@
 # -*- coding: utf-8 -*-
 # vim: ft=jinja
 
-{% import_yaml 'intellij/defaults.yaml' as defaults %}
-{% import_yaml "intellij/osmap.yaml" as osmap %}
+{%- set tplroot = tpldir.split('/')[0] %}
+{%- import_yaml tplroot ~ "/defaults.yaml" as default_settings %}
+{%- import_yaml tplroot ~ "/osfamilymap.yaml" as osfamilymap %}
 
-# start with defaults, merge osmap, then pillar data
-{% set ide = salt['grains.filter_by'](
-    defaults,
-    merge=salt['grains.filter_by'](
-        osmap,
-        grain='os',
-        merge=salt['pillar.get']('intellij', {}),
-    ),
-    base='intellij',
-) %}
+{%- set _config = salt['config.get'](tplroot, default={}) %}
+{%- set defaults = salt['grains.filter_by'](
+      default_settings,
+      default=tplroot,
+      merge=salt['grains.filter_by']( osfamilymap, grain='os_family',
+        merge=salt['grains.filter_by']( _config, default='lookup'
+        )
+      )
+    )
+%}
+{%- set intellij = salt['grains.filter_by']( {'defaults': defaults}, default='defaults', merge=_config) %}
 
-# Get dynamic release metadata
-{%- set pcode = ide.jetbrains.product %}
-{%- set pcode = pcode ~ ide.jetbrains.edition if ide.jetbrains.edition else pcode %}
-{%- set jdata = salt['cmd.run']('curl {0} -s {1}{2}'.format(ide.dl.opts, ide.jetbrains.uri, pcode))|load_yaml %}
+{%- set pcode = intellij.product ~ intellij.edition if intellij.edition else intellij.product %}
+{%- set jdata = salt['cmd.run']('curl -s -L {0}{1}'.format(intellij.pkg.archive.uri, pcode))|load_yaml %}
+{%- do intellij.update({ 'version': jdata[ pcode ][0]['version'] }) %}
 
-# Extract download details
-{%- set _home = '{0}/intellij-{1}-{2}'.format( ide.prefix, ide.jetbrains.edition, jdata[ pcode ][0]['version'],) %}
-{%- if grains.os == 'MacOS' %}
-  {%- set _home = '{0} {1}E.app/Contents/MacOS'.format(ide.prefix, ide.jetbrains.edition) %}
-{% endif %}
-{%- set src_hashurl = jdata[ pcode ][0]['downloads'][ ide.osflavour ]['checksumLink'] %}
-{%- set src_hashsum  = salt['cmd.run']('curl -s {0}'.format( src_hashurl )).split(' ')[0] %}
+{%- set dirname = 'intellij-%s-%s'|format( intellij.edition, intellij.version) %}
+{%- set url = jdata[ pcode ][0]['downloads'][ intellij.pkg.tag ]['link'] %}
+{%- set hash  = salt['cmd.run']('curl -L -s {0}'.format( jdata[ pcode ][0]['downloads'][ intellij.pkg.tag ]['checksumLink'])).split(' ')[0] %}  # noqa 204
 
-# Get user's group name from pillar or 'id' command
-{%- if not ide.prefs.group %}
-  {%- set usergroup = salt['cmd.run']('id -gn', runas=ide.prefs.user, output_loglevel='quiet',) or None %}
-  {%- do ide.prefs.update({'group': usergroup,}) %}
+{%- if intellij.pkg.use_upstream_archive %}
+       {%- do intellij.pkg.archive.update({'name': intellij.dir.archive ~ '/' ~ dirname,
+                                           'source': url,
+                                           'source_hash': hash }) %}
 {%- endif %}
- 
-# Update dynamic parameters
-{% do ide.jetbrains.update({ 'realhome': _home, 'realcmd' : _home ~ ide.command },) %}
-{% do ide.dl.update({
-       'source_url'  : jdata[ pcode ][0]['downloads'][ ide.osflavour ]['link'],
-       'archive_name': jdata[ pcode ][0]['downloads'][ ide.osflavour ]['link'].split('/') | last ,
-       'src_hashurl' : src_hashurl,
-       'src_hashsum' : src_hashsum,
-       'unpack_opts' : ' -z -C ' ~  _home ~ ' --strip-components=1' },
-) %}
-{% set intellij = ide %}
 
+{%- if intellij.pkg.use_upstream_macapp %}
+       {%- do intellij.pkg.macapp.update({ 'name': '/Applications', 'source': url, 'source_hash': hash }) %}
+{%- endif %}

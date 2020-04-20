@@ -1,23 +1,15 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+---
 intellij:
-  jetbrains:
-    #See https://www.jetbrains.com/help/idea/meet-intellij-idea.html
-    #Default edition 'C' (community) or 'U' (Ultimate).
-    edition: C
-  linux:
-    #Enable Debian alternatives feature by setting nonzero 'altpriority' value here.
-    #Increase same value on each subsequent software installation.
-    #altpriority: 170
-
-    #On freedesktop.org-compliant desktops, enable Icon on Linux launchers.
-    #Place a .desktop file in e.g. /usr/share/applications (default is True)
-    install_desktop_file: True
-    desktop_file: /usr/share/applications/intellij.desktop
-  dl:
-    retries: 1
-    interval: 30
-  prefs:
+  edition: C       # community
+  config: {}
+  environ:
+    a: b
+  pkg:
+    use_upstream_archive: true
+    use_upstream_macapp: false
+  identity:
     user: undefined_user
-    #See https://www.jetbrains.com/help/idea/exporting-and-importing-settings.html
-    jarurl:
-    jardir:
-    jarfile: intellij-settings.jar
+  linux:
+    altpriority: 0
