@@ -1,8 +1,9 @@
-name: intelliJ
-os: RedHat, Debian, Ubuntu, Suse, FreeBSD
-os_family: RedHat, Debian, Suse, FreeBSD
-version: 201706
+name: intellij
+os: Debian, Ubuntu, Raspbian, RedHat, Fedora, CentOS, Amazon, Suse, openSUSE, Gentoo, Funtoo, Arch, Manjaro, Alpine, FreeBSD, OpenBSD, Solaris, SmartOS, Windows, MacOS
+os_family: Debian, RedHat, Suse, Gentoo, Arch, Alpine, FreeBSD, OpenBSD, Solaris, Windows, MacOS
+version: 0.2.2
 release: 1
-minimum_version: 2017.6
-summary: Formula for installing intelliJ
-description: Formula for installing Intellij IDEA for Java developers
+minimum_version: 2019.2
+summary: intellij formula
+description: Formula to install intellij and configure it
+top_level_dir: intellij
