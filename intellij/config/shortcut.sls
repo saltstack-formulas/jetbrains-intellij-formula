@@ -28,7 +28,7 @@ intellij-config-file-file-managed-desktop-shortcut_file:
     - template: jinja
     - context:
         appname: {{ intellij.pkg.name }}
-        edition: {{ intellij.edition|json }}
+        edition: {{ '' if 'edition' not in intellij else intellij.edition|json }}
         command: {{ intellij.command|json }}
               {%- if intellij.pkg.use_upstream_macapp %}
         path: {{ intellij.pkg.macapp.path }}
