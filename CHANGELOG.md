@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.0.1](https://github.com/saltstack-formulas/jetbrains-intellij-formula/compare/v1.0.0...v1.0.1) (2020-06-15)
+
+
+### Bug Fixes
+
+* **edition:** better edition jinja code ([2eae7ed](https://github.com/saltstack-formulas/jetbrains-intellij-formula/commit/2eae7ed5ec5e7f64851d551b4b9102236e61133c))
+* **jinja:** improve 'edition' handling ([3b7330a](https://github.com/saltstack-formulas/jetbrains-intellij-formula/commit/3b7330a602d6738caf5a5e425db07dc764b6630d))
+
+
+### Continuous Integration
+
+* **kitchen+travis:** add new platforms [skip ci] ([e948d0b](https://github.com/saltstack-formulas/jetbrains-intellij-formula/commit/e948d0b7dbae10b4529ef2c5bf678e6241d100cf))
+* **kitchen+travis:** adjust matrix to add `3000.3` [skip ci] ([6b51e08](https://github.com/saltstack-formulas/jetbrains-intellij-formula/commit/6b51e08bdf1ae60b5040537668180d665e3687ec))
+* **travis:** add notifications => zulip [skip ci] ([057a169](https://github.com/saltstack-formulas/jetbrains-intellij-formula/commit/057a169f937b73efd82b7311f6aa8e725f13094f))
+
+
+### Documentation
+
+* **readme:** style change ([4ed3842](https://github.com/saltstack-formulas/jetbrains-intellij-formula/commit/4ed38423f0ac21f2e6309fdc104b4d3004ae2e55))
+
 # [1.0.0](https://github.com/saltstack-formulas/jetbrains-intellij-formula/compare/v0.5.0...v1.0.0) (2020-05-12)
 
 
