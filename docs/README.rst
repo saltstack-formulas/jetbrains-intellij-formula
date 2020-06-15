@@ -55,7 +55,7 @@ Available states
    :local:
 
 ``intellij``
-^^^^^^^^^^
+^^^^^^^^^^^^
 
 *Meta-state (This is a state that includes other states)*.
 
@@ -64,28 +64,28 @@ manages Intellij configuration file and then
 configures the development environment.
 
 ``intellij.archive``
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 
 This state will install Intellij from archive only.
 
 ``intellij.macapp``
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 
 This state will install Intellij from source only.
 
 ``intellij.config``
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 
 This state will configure npmrc and/or environment and has a dependency on ``intellij.install``
 via include list.
 
 ``intellij.linuxenv``
-^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
 
 This state will install some Intellij linux-alternatives on GNU/Linux.
 
 ``intellij.clean``
-^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 *Meta-state (This is a state that includes other states)*.
 
@@ -94,25 +94,25 @@ removes the configuration file and
 then uninstalls the package.
 
 ``intellij.config.clean``
-^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will remove the configuration of Intellij and has a
 dependency on ``intellij.package.clean`` via include list.
 
 ``intellij.archive.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will remove Intellij package and has a dependency on
 ``intellij.config.clean`` via include list.
 
 ``intellij.macapp.clean``
-^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will remove Intellij package and has a dependency on
 ``intellij.config.clean`` via include list.
 
 ``intellij.linuxenv.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will remove Intellij linux-alternatives on GNU/Linux.
 
