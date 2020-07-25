@@ -33,7 +33,7 @@
                                            'source_hash': hash }) %}
 {%- endif %}
 {%- if i.pkg.use_upstream_macapp %}
-       {%- do i.pkg.macapp.update({'name': '/Applications',
+       {%- do i.pkg.macapp.update({'name': '/Applications' ~ '/' ~ i.pkg.name,
                                    'path': '/Applications',
                                    'source': url,
                                    'source_hash': hash }) %}

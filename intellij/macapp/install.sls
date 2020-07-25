@@ -25,7 +25,7 @@ intellij-macos-app-install-curl:
       # the file to trigger fresh download on rerun
 intellij-macos-app-install-checksum:
   module.run:
-    - onlyif: {{ intellij.pkg.macapp.source_hash }}
+    - onlyif: {{ intellij.pkg.macapp.source_hash not in (None, '')  }}
     - name: file.check_hash
     - path: {{ intellij.dir.tmp }}/intellij-{{ intellij.version }}
     - file_hash: {{ intellij.pkg.macapp.source_hash }}
@@ -54,10 +54,12 @@ intellij-macos-app-install-macpackage:
     - mode: 755
     - template: jinja
     - context:
-      appname: {{ intellij.pkg.name }}
+      appname: {{ intellij.pkg.macapp.name }}
       edition: {{ intellij.edition }}
       user: {{ intellij.identity.user }}
       homes: {{ intellij.dir.homes }}
+    - onlyif:
+      - test -d {{ intellij.pkg.macapp.path }}
   cmd.run:
     - name: /tmp/mac_shortcut.sh
     - runas: {{ intellij.identity.user }}

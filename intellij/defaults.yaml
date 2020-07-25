@@ -25,12 +25,12 @@ intellij:
     use_upstream_macapp: false
     deps:
       - curl
-      - tar
       - gzip
     repo: {}
     suffix: tar.gz
     macapp:
       path: null
+      source_hash: null
     archive:
       path: null
       uri: 'https://data.services.jetbrains.com/products/releases?latest=true&code='
