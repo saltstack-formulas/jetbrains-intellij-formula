@@ -27,16 +27,12 @@
 {%- set hash  = salt['cmd.run']('curl -L -s "{0}"'.format( jdata[ pcode ][0]['downloads'][ i.flavour ]['checksumLink'])).split(' ')[0] %}  # noqa 204
 
 {%- if i.pkg.use_upstream_archive %}
-       {%- do i.pkg.archive.update({'name': i.dir.archive ~ '/' ~ dirname,
-                                           'path': i.dir.archive ~ '/' ~ dirname,
-                                           'source': url,
-                                           'source_hash': hash }) %}
+    {%- do i.config.update({'path': i.dir.archive ~ '/' ~ dirname })
+    {%- do i.pkg.archive.update({'name': i.dir.archive ~ '/' ~ dirname, 'source': url, 'source_hash': hash }) %}
 {%- endif %}
 {%- if i.pkg.use_upstream_macapp %}
-       {%- do i.pkg.macapp.update({'name': '/Applications' ~ '/' ~ i.pkg.name,
-                                   'path': '/Applications',
-                                   'source': url,
-                                   'source_hash': hash }) %}
+    {%- do i.config.update({'path': '/Applications' })
+    {%- do i.pkg.macapp.update({'source': url, 'source_hash': hash }) %}
 {%- endif %}
 
 {%- set intellij = i %}

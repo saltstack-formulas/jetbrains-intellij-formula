@@ -10,7 +10,8 @@ intellij:
 
   command: /bin/idea.sh
   config_file: null
-  config: {}
+  config:
+    path: null
   environ_file: /etc/default/intellij.sh
   environ: []
 
@@ -32,6 +33,7 @@ intellij:
       path: null
       source_hash: null
     archive:
+      name: null
       path: null
       uri: 'https://data.services.jetbrains.com/products/releases?latest=true&code='
       # See https://www.jetbrains.com/help/idea/meet-intellij-idea.html

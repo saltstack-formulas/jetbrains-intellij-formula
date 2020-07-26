@@ -30,13 +30,8 @@ intellij-config-file-file-managed-desktop-shortcut_file:
         appname: {{ intellij.pkg.name }}
         edition: {{ '' if 'edition' not in intellij else intellij.edition|json }}
         command: {{ intellij.command|json }}
-              {%- if intellij.pkg.use_upstream_macapp %}
-        path: {{ intellij.pkg.macapp.path }}
-    - onlyif: test -f "{{ intellij.pkg.macapp.path }}/{{ intellij.command }}"
-              {%- else %}
-        path: {{ intellij.pkg.archive.path }}
-    - onlyif: test -f {{ intellij.pkg.archive.path }}/{{ intellij.command }}
-              {%- endif %}
+        path: {{ intellij.config.path }}
+    - onlyif: test -f "{{ intellij.config.path }}/{{ intellij.command }}"
     - require:
       - sls: {{ sls_package_install }}
 
