@@ -28,12 +28,8 @@ intellij-config-file-managed-config_file:
     - makedirs: True
     - template: jinja
     - context:
-              {%- if intellij.pkg.use_upstream_macapp %}
-        path: {{ intellij.pkg.macapp.path }}
-              {%- else %}
-        path: {{ intellij.pkg.archive.path }}
-              {%- endif %}
-        config: {{ intellij.config|json }}
+      path: {{ intellij.config.path }}
+      config: {{ intellij.config|json }}
     - require:
       - sls: {{ sls_package_install }}
 

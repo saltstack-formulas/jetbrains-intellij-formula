@@ -54,7 +54,7 @@ intellij-macos-app-install-macpackage:
     - mode: 755
     - template: jinja
     - context:
-      appname: {{ intellij.pkg.name }}
+      appname: {{ intellij.config.path }}/{{ intellij.pkg.name }}
       edition: {{ intellij.edition }}
       user: {{ intellij.identity.user }}
       homes: {{ intellij.dir.homes }}
