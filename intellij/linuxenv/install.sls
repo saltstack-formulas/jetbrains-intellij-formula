@@ -10,8 +10,8 @@
 intellij-linuxenv-home-file-symlink:
   file.symlink:
     - name: /opt/intellij
-    - target: {{ intellij.config.path }}
-    - onlyif: test -d '{{ intellij.config.path }}'
+    - target: {{ intellij.dir.path }}
+    - onlyif: test -d '{{ intellij.dir.path }}'
     - force: True
 
         {% if intellij.linux.altpriority|int > 0 and grains.os_family not in ('Arch',) %}
@@ -20,14 +20,14 @@ intellij-linuxenv-home-alternatives-install:
   alternatives.install:
     - name: intellijhome
     - link: /opt/intellij
-    - path: {{ intellij.config.path }}
+    - path: {{ intellij.dir.path }}
     - priority: {{ intellij.linux.altpriority }}
     - retry: {{ intellij.retry_option|json }}
 
 intellij-linuxenv-home-alternatives-set:
   alternatives.set:
     - name: intellijhome
-    - path: {{ intellij.config.path }}
+    - path: {{ intellij.dir.path }}
     - onchanges:
       - alternatives: intellij-linuxenv-home-alternatives-install
     - retry: {{ intellij.retry_option|json }}
@@ -36,7 +36,7 @@ intellij-linuxenv-executable-alternatives-install:
   alternatives.install:
     - name: intellij
     - link: {{ intellij.linux.symlink }}
-    - path: {{ intellij.config.path }}/{{ intellij.command }}
+    - path: {{ intellij.dir.path }}/{{ intellij.command }}
     - priority: {{ intellij.linux.altpriority }}
     - require:
       - alternatives: intellij-linuxenv-home-alternatives-install
@@ -46,7 +46,7 @@ intellij-linuxenv-executable-alternatives-install:
 intellij-linuxenv-executable-alternatives-set:
   alternatives.set:
     - name: intellij
-    - path: {{ intellij.config.path }}/{{ intellij.command }}
+    - path: {{ intellij.dir.path }}/{{ intellij.command }}
     - onchanges:
       - alternatives: intellij-linuxenv-executable-alternatives-install
     - retry: {{ intellij.retry_option|json }}

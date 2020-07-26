@@ -28,7 +28,6 @@ intellij-config-file-managed-config_file:
     - makedirs: True
     - template: jinja
     - context:
-      path: {{ intellij.config.path }}
       config: {{ intellij.config|json }}
     - require:
       - sls: {{ sls_package_install }}

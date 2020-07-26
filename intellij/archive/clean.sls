@@ -9,8 +9,8 @@ intellij-package-archive-clean-file-absent:
   file.absent:
     - names:
             {%- if grains.os == 'MacOS' %}
-      - {{ intellij.config.path }}/{{ intellij.pkg.name }}*{{ intellij.edition }}
+      - {{ intellij.dir.path }}/{{ intellij.pkg.name }}*{{ intellij.edition }}
             {%- else %}
-      - {{ intellij.config.path }}
+      - {{ intellij.dir.path }}
             {%- endif %}
       - /usr/local/jetbrains/intellij-*

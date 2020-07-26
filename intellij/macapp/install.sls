@@ -14,7 +14,7 @@ intellij-macos-app-install-curl:
   pkg.installed:
     - name: curl
   cmd.run:
-    - name: curl -Lo {{ intellij.dir.tmp }}/intellij-{{ intellij.version }} {{ intellij.pkg.macapp.source }}
+    - name: curl -Lo {{ intellij.dir.tmp }}/intellij-{{ intellij.version }} "{{ intellij.pkg.macapp.source }}"
     - unless: test -f {{ intellij.dir.tmp }}/intellij-{{ intellij.version }}
     - require:
       - file: intellij-macos-app-install-curl
@@ -54,12 +54,14 @@ intellij-macos-app-install-macpackage:
     - mode: 755
     - template: jinja
     - context:
-      appname: {{ intellij.config.path }}/{{ intellij.pkg.name }}
+      appname: {{ intellij.dir.path }}/{{ intellij.pkg.name }}
       edition: {{ intellij.edition }}
       user: {{ intellij.identity.user }}
       homes: {{ intellij.dir.homes }}
-    - onlyif:
-      - test -d {{ intellij.pkg.macapp.path }}
+    - require:
+      - macpackage: intellij-macos-app-install-macpackage
+    - onchanges:
+      - macpackage: intellij-macos-app-install-macpackage
   cmd.run:
     - name: /tmp/mac_shortcut.sh
     - runas: {{ intellij.identity.user }}

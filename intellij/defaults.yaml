@@ -10,12 +10,12 @@ intellij:
 
   command: /bin/idea.sh
   config_file: null
-  config:
-    path: null
+  config: {}
   environ_file: /etc/default/intellij.sh
   environ: []
 
   dir:
+    path: null
     archive: /usr/local/jetbrains
     homes: /home
     tmp: /tmp/jetbrains/intellij
