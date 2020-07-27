@@ -29,13 +29,10 @@ intellij:
       - gzip
     repo: {}
     suffix: tar.gz
-    macapp:
-      path: null
-      source_hash: null
+    uri: 'https://data.services.jetbrains.com/products/releases?latest=true&code='
+    macapp: {}
     archive:
       name: null
-      path: null
-      uri: 'https://data.services.jetbrains.com/products/releases?latest=true&code='
       # See https://www.jetbrains.com/help/idea/meet-intellij-idea.html
       source_hash: null
       enforce_toplevel: false

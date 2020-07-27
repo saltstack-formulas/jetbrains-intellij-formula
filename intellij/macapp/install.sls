@@ -49,13 +49,13 @@ intellij-macos-app-install-macpackage:
     - onchanges:
       - cmd: intellij-macos-app-install-curl
   file.managed:
-    - name: /tmp/mac_shortcut.sh
-    - source: salt://intellij/files/mac_shortcut.sh
+    - name: /tmp/mac_shortcut.sh.jinja
+    - source: salt://intellij/files/mac_shortcut.sh.jinja
     - mode: 755
     - template: jinja
     - context:
       appname: {{ intellij.dir.path }}/{{ intellij.pkg.name }}
-      edition: {{ intellij.edition }}
+      edition: {{ '' if not intellij.edition else ' %sE'|format(intellij.edition) }}
       user: {{ intellij.identity.user }}
       homes: {{ intellij.dir.homes }}
     - require:
@@ -63,7 +63,7 @@ intellij-macos-app-install-macpackage:
     - onchanges:
       - macpackage: intellij-macos-app-install-macpackage
   cmd.run:
-    - name: /tmp/mac_shortcut.sh
+    - name: /tmp/mac_shortcut.sh.jinja
     - runas: {{ intellij.identity.user }}
     - require:
       - file: intellij-macos-app-install-macpackage

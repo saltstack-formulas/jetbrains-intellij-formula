@@ -2,10 +2,10 @@
 # vim: ft=sls
 
 {%- set tplroot = tpldir.split('/')[0] %}
-{%- from tplroot ~ "/map.jinja" import intellij as i with context %}
+{%- from tplroot ~ "/map.jinja" import intellij with context %}
 {%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
 
-    {%- if i.pkg.use_upstream_macapp %}
+    {%- if intellij.pkg.use_upstream_macapp %}
         {%- set sls_package_install = tplroot ~ '.macapp.install' %}
     {%- else %}
         {%- set sls_package_install = tplroot ~ '.archive.install' %}
@@ -14,24 +14,26 @@
 include:
   - {{ sls_package_install }}
 
-i-config-file-file-managed-environ_file:
+intellij-config-file-file-managed-environ_file:
   file.managed:
-    - name: {{ i.environ_file }}
+    - name: {{ intellij.environ_file }}
     - source: {{ files_switch(['environ.sh.jinja'],
-                              lookup='i-config-file-file-managed-environ_file'
+                              lookup='intellij-config-file-file-managed-environ_file'
                  )
               }}
     - mode: 644
-    - user: {{ i.identity.rootuser }}
-    - group: {{ i.identity.rootgroup }}
+    - user: {{ intellij.identity.rootuser }}
+    - group: {{ intellij.identity.rootgroup }}
     - makedirs: True
     - template: jinja
     - context:
-              {%- if i.pkg.use_upstream_macapp %}
-        path: '{{ i.dir.path }}/{{ i.pkg.name }}{{ '' if 'edition' not in i else ' %sE'|format(i.edition) }}.app/Contents/MacOS'  # noqa 204
-              {%- else %}
-        path: {{ i.dir.path }}/bin
-              {%- endif %}
-        environ: {{ i.environ|json }}
+      environ: {{ intellij.environ|json }}
+                      {%- if intellij.pkg.use_upstream_macapp %}
+      edition:  {{ '' if not intellij.edition else ' %sE'|format(intellij.edition) }}.app/Contents/MacOS
+      appname: {{ intellij.dir.path }}/{{ intellij.pkg.name }}
+                      {%- else %}
+      edition: ''
+      appname: {{ intellij.dir.path }}/bin
+                      {%- endif %}
     - require:
       - sls: {{ sls_package_install }}

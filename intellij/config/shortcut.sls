@@ -27,14 +27,15 @@ intellij-config-file-file-managed-desktop-shortcut_file:
     - makedirs: True
     - template: jinja
     - context:
-        edition: {{ '' if 'edition' not in intellij else intellij.edition|json }}
-        command: {{ intellij.command|json }}
-                         {%- if grains.os == 'MacOS' %}
-        appname: {{ intellij.dir.path }}/{{ intellij.pkg.name }}
-                         {%- else %}
-        appname: {{ intellij.pkg.archive.name }}
+      command: {{ intellij.command|json }}
+                        {%- if grains.os == 'MacOS' %}
+      edition: {{ '' if 'edition' not in intellij else intellij.edition|json }}
+      appname: {{ intellij.dir.path }}/{{ intellij.pkg.name }}
+                        {%- else %}
+      edition: ''
+      appname: {{ intellij.dir.path }}
     - onlyif: test -f "{{ intellij.dir.path }}/{{ intellij.command }}"
-                         {%- endif %}
+                        {%- endif %}
     - require:
       - sls: {{ sls_package_install }}
 

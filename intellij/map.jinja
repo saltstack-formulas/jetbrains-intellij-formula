@@ -19,7 +19,7 @@
 
 {%- set edition = '' if 'edition' not in i else i.edition %}
 {%- set pcode = i.product ~ edition %}
-{%- set jdata = salt['cmd.run']('curl -s -L "{0}{1}"'.format(i.pkg.archive.uri, pcode))|load_yaml %}
+{%- set jdata = salt['cmd.run']('curl -s -L "{0}{1}"'.format(i.pkg.uri, pcode))|load_yaml %}
 {%- do i.update({ 'version': jdata[ pcode ][0]['version'] }) %}
 
 {%- set dirname = 'intellij-%s-%s'|format( edition, i.version) %}
