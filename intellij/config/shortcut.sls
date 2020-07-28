@@ -5,19 +5,15 @@
 {%- from tplroot ~ "/map.jinja" import intellij with context %}
 {%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
 
-{%- if intellij.linux.install_desktop_file and grains.os not in ('MacOS',) %}
-       {%- if intellij.pkg.use_upstream_macapp %}
-           {%- set sls_package_install = tplroot ~ '.macapp.install' %}
-       {%- else %}
-           {%- set sls_package_install = tplroot ~ '.archive.install' %}
-       {%- endif %}
+{%- if intellij.shortcut.install and grains.kernel|lower == 'linux' %}
+    {%- set sls_package_install = tplroot ~ '.archive.install' %}
 
 include:
   - {{ sls_package_install }}
 
 intellij-config-file-file-managed-desktop-shortcut_file:
   file.managed:
-    - name: {{ intellij.linux.desktop_file }}
+    - name: {{ intellij.shortcut.file }}
     - source: {{ files_switch(['shortcut.desktop.jinja'],
                               lookup='intellij-config-file-file-managed-desktop-shortcut_file'
                  )
@@ -27,16 +23,15 @@ intellij-config-file-file-managed-desktop-shortcut_file:
     - makedirs: True
     - template: jinja
     - context:
-        appname: {{ intellij.pkg.name }}
-        edition: {{ '' if 'edition' not in intellij else intellij.edition|json }}
-        command: {{ intellij.command|json }}
-              {%- if intellij.pkg.use_upstream_macapp %}
-        path: {{ intellij.pkg.macapp.path }}
-    - onlyif: test -f "{{ intellij.pkg.macapp.path }}/{{ intellij.command }}"
-              {%- else %}
-        path: {{ intellij.pkg.archive.path }}
-    - onlyif: test -f {{ intellij.pkg.archive.path }}/{{ intellij.command }}
-              {%- endif %}
+      command: {{ intellij.command|json }}
+                        {%- if grains.os == 'MacOS' %}
+      edition: {{ '' if 'edition' not in intellij else intellij.edition|json }}
+      appname: {{ intellij.dir.path }}/{{ intellij.pkg.name }}
+                        {%- else %}
+      edition: ''
+      appname: {{ intellij.dir.path }}
+    - onlyif: test -f "{{ intellij.dir.path }}/{{ intellij.command }}"
+                        {%- endif %}
     - require:
       - sls: {{ sls_package_install }}
 

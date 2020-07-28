@@ -27,11 +27,13 @@ intellij-config-file-file-managed-environ_file:
     - makedirs: True
     - template: jinja
     - context:
-              {%- if intellij.pkg.use_upstream_macapp %}
-        path: '/Applications/{{ intellij.pkg.name|replace(' ','\ ') }}{{ '' if 'edition' not in intellij else '\ %sE'|format(intellij.edition) }}.app/Contents/MacOS'  # noqa 204
-              {%- else %}
-        path: {{ intellij.pkg.archive.path }}/bin
-              {%- endif %}
-        environ: {{ intellij.environ|json }}
+      environ: {{ intellij.environ|json }}
+                      {%- if intellij.pkg.use_upstream_macapp %}
+      edition:  {{ '' if not intellij.edition else ' %sE'|format(intellij.edition) }}.app/Contents/MacOS
+      appname: {{ intellij.dir.path }}/{{ intellij.pkg.name }}
+                      {%- else %}
+      edition: ''
+      appname: {{ intellij.dir.path }}/bin
+                      {%- endif %}
     - require:
       - sls: {{ sls_package_install }}

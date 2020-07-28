@@ -15,6 +15,7 @@ intellij:
   environ: []
 
   dir:
+    path: null
     archive: /usr/local/jetbrains
     homes: /home
     tmp: /tmp/jetbrains/intellij
@@ -25,15 +26,13 @@ intellij:
     use_upstream_macapp: false
     deps:
       - curl
-      - tar
       - gzip
     repo: {}
     suffix: tar.gz
-    macapp:
-      path: null
+    uri: 'https://data.services.jetbrains.com/products/releases?latest=true&code='
+    macapp: {}
     archive:
-      path: null
-      uri: 'https://data.services.jetbrains.com/products/releases?latest=true&code='
+      name: null
       # See https://www.jetbrains.com/help/idea/meet-intellij-idea.html
       source_hash: null
       enforce_toplevel: false
@@ -55,7 +54,9 @@ intellij:
   linux:
     symlink: /usr/local/bin/intellij
     altpriority: 0
+
+  shortcut:
     # On freedesktop.org-compliant desktops, enable Icon on Linux launchers.
     # Place a .desktop file in e.g. /usr/share/applications
-    install_desktop_file: true
-    desktop_file: /usr/share/applications/intellij.desktop
+    install: true
+    file: /usr/share/applications/intellij.desktop

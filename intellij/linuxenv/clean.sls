@@ -11,21 +11,21 @@ intellij-linuxenv-home-file-absent:
   file.absent:
     - names:
       - /opt/intellij
-      - {{ intellij.pkg.archive.path }}
+      - {{ intellij.dir.path }}
 
         {% if intellij.linux.altpriority|int > 0 and grains.os_family not in ('Arch',) %}
 
 intellij-linuxenv-home-alternatives-clean:
   alternatives.remove:
     - name: intellijhome
-    - path: {{ intellij.pkg.archive.path }}
+    - path: {{ intellij.dir.path }}
     - onlyif: update-alternatives --get-selections |grep ^intellijhome
 
 
 intellij-linuxenv-executable-alternatives-clean:
   alternatives.remove:
     - name: intellij
-    - path: {{ intellij.pkg.archive.path }}/intellij
+    - path: {{ intellij.dir.path }}/{{ intellij.command }}
     - onlyif: update-alternatives --get-selections |grep ^intellij
 
         {%- else %}
