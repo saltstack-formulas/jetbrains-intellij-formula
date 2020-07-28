@@ -1,5 +1,37 @@
 # Changelog
 
+## [1.0.2](https://github.com/saltstack-formulas/jetbrains-intellij-formula/compare/v1.0.1...v1.0.2) (2020-07-28)
+
+
+### Bug Fixes
+
+* **macapp:** fix macapp state on macos ([5353f72](https://github.com/saltstack-formulas/jetbrains-intellij-formula/commit/5353f725afca4c6de6958e82d6b8332f0bd5730b))
+* **macos:** do not create shortcut file ([ef570b9](https://github.com/saltstack-formulas/jetbrains-intellij-formula/commit/ef570b9c942a9713939e6ab2b3f274435e50b551))
+* **salt:** wrap url in double quotes ([b5773ae](https://github.com/saltstack-formulas/jetbrains-intellij-formula/commit/b5773ae7930f8f14fc1c99edfb86534c6f6deef0))
+* **salt:** wrap url in double quotes ([4662375](https://github.com/saltstack-formulas/jetbrains-intellij-formula/commit/4662375c8095ab74167fb63366c99768254e0295))
+
+
+### Code Refactoring
+
+* **jetbrains:** align jetbrains formulas ([4da063b](https://github.com/saltstack-formulas/jetbrains-intellij-formula/commit/4da063b71026f5067a1110027b07dc267a9e6806))
+* **path:** use consistent variables ([bbff942](https://github.com/saltstack-formulas/jetbrains-intellij-formula/commit/bbff942c26b7c5929c04081bb9b5f73c172882f2))
+* **vars:** consistent path handling ([e5e95c9](https://github.com/saltstack-formulas/jetbrains-intellij-formula/commit/e5e95c9a2255804cea8382e91230cf70bfb1cd49))
+
+
+### Continuous Integration
+
+* **kitchen:** use `saltimages` Docker Hub where available [skip ci] ([3dcfbc9](https://github.com/saltstack-formulas/jetbrains-intellij-formula/commit/3dcfbc9af7616453e2baec23a30341774cca8544))
+
+
+### Documentation
+
+* **readme:** minor update ([e80c1de](https://github.com/saltstack-formulas/jetbrains-intellij-formula/commit/e80c1def52d24c4f83b699648fb794b022ea520f))
+
+
+### Styles
+
+* **libtofs.jinja:** use Black-inspired Jinja formatting [skip ci] ([f8023ad](https://github.com/saltstack-formulas/jetbrains-intellij-formula/commit/f8023ad8602599e2394d1297f3601cf9c9160d32))
+
 ## [1.0.1](https://github.com/saltstack-formulas/jetbrains-intellij-formula/compare/v1.0.0...v1.0.1) (2020-06-15)
 
 
