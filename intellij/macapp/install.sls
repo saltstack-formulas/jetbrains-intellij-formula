@@ -15,7 +15,9 @@ intellij-macos-app-install-curl:
     - name: curl
   cmd.run:
     - name: curl -Lo {{ intellij.dir.tmp }}/intellij-{{ intellij.version }} "{{ intellij.pkg.macapp.source }}"
-    - unless: test -f {{ intellij.dir.tmp }}/intellij-{{ intellij.version }}
+    - unless:
+      - test -f {{ intellij.dir.tmp }}/intellij-{{ intellij.version }}
+      - test -d {{ intellij.dir.path }}/{{ intellij.pkg.name }}{{ '' if not intellij.edition else ' %sE'|format(intellij.edition) }}  # noqa 204
     - require:
       - file: intellij-macos-app-install-curl
       - pkg: intellij-macos-app-install-curl
@@ -26,6 +28,8 @@ intellij-macos-app-install-curl:
 intellij-macos-app-install-checksum:
   module.run:
     - onlyif: {{ intellij.pkg.macapp.source_hash not in (None, '')  }}
+    - unless:
+      - test -d {{ intellij.dir.path }}/{{ intellij.pkg.name }}{{ '' if not intellij.edition else ' %sE'|format(intellij.edition) }}  # noqa 204
     - name: file.check_hash
     - path: {{ intellij.dir.tmp }}/intellij-{{ intellij.version }}
     - file_hash: {{ intellij.pkg.macapp.source_hash }}

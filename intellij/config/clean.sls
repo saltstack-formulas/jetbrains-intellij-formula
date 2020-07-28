@@ -24,7 +24,7 @@ intellij-config-clean-file-absent:
       - {{ intellij.environ_file }}
                {%- endif %}
                {%- if grains.kernel|lower == 'linux' %}
-      - {{ intellij.linux.desktop_file }}
+      - {{ intellij.shortcut.file }}
                {%- elif grains.os == 'MacOS' %}
       - {{ intellij.dir.homes }}/{{ intellij.identity.user }}/Desktop/{{ intellij.pkg.name }}*{{ intellij.edition }}*
                {%- endif %}

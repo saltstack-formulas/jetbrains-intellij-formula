@@ -28,7 +28,7 @@
 
 {%- if i.pkg.use_upstream_archive %}
     {%- do i.dir.update({'path': i.dir.archive ~ '/' ~ dirname }) %}
-    {%- do i.pkg.archive.update({'name': i.dir.archive ~'/'~ dirname, 'source': url, 'source_hash': hash }) %}
+    {%- do i.pkg.archive.update({'name': i.dir.archive ~ '/' ~ dirname, 'source': url, 'source_hash': hash }) %}
 {%- endif %}
 {%- if i.pkg.use_upstream_macapp %}
     {%- do i.dir.update({'path': '/Applications' }) %}
