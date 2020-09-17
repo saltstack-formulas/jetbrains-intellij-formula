@@ -4,7 +4,7 @@
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import intellij with context %}
 
-    {%- if grains.kernel|lower in ('linux', 'darwin',) %}
+    {%- if grains.kernel|lower in ('linux', 'darwin', 'windows') %}
 
 include:
   - {{ '.macapp' if intellij.pkg.use_upstream_macapp else '.archive' }}

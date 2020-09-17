@@ -6,15 +6,22 @@
 {%- from tplroot ~ "/files/macros.jinja" import format_kwargs with context %}
 
 intellij-package-archive-install:
+             {%- if grains.os == 'Windows' %}
+  chocolatey.installed:
+    - force: False
+             {%- else %}
   pkg.installed:
+             {%- endif %}
     - names: {{ intellij.pkg.deps|json }}
     - require_in:
       - file: intellij-package-archive-install
   file.directory:
     - unless: {{ grains.os == 'MacOS' }}
     - name: {{ intellij.dir.path }}
+             {%- if grains.os != 'Windows' %}
     - user: {{ intellij.identity.rootuser }}
     - group: {{ intellij.identity.rootgroup }}
+             {%- endif %}
     - mode: 755
     - makedirs: True
     - clean: True
@@ -27,11 +34,13 @@ intellij-package-archive-install:
   archive.extracted:
     {{- format_kwargs(intellij.pkg.archive) }}
     - retry: {{ intellij.retry_option|json }}
+           {%- if grains.os != 'Windows' %}
     - user: {{ intellij.identity.rootuser }}
     - group: {{ intellij.identity.rootgroup }}
     - recurse:
         - user
         - group
+           {%- endif %}
     - require:
       - file: intellij-package-archive-install
 

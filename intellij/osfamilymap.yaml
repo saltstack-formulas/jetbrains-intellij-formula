@@ -11,26 +11,36 @@
 # osfamilymap: {}
 ---
 {%- if grains.os == 'MacOS' %}
-    {%- set macos_rootuser = salt['cmd.run']("stat -f '%Su' /dev/console") %}
-    {%- set macos_rootgroup = salt['cmd.run']("stat -f '%Sg' /dev/console") %}
+    {%- set rootuser = salt['cmd.run']("stat -f '%Su' /dev/console") %}
+    {%- set rootgroup = salt['cmd.run']("stat -f '%Sg' /dev/console") %}
+{%- elif grains.os == 'Windows' %}
+    {%- set rootuser = salt['cmd.run']("id -un") %}
 {%- endif %}
 
 Windows:
-  flavour: windows
-  command: \\idea.exe
+  flavour: windowsZip
+  identity:
+    rootuser: {{ rootuser | d('') }}
+  command: bin\\idea.exe
   dir:
-    archive: C:\\Program files\\Jetbrains\\
-    tmp: C:\\temp\\jetbrainstmp\\
+    archive: C:\Program files\Jetbrains
+    tmp: C:\temp\jetbrainstmp
     homes: C:\\Users
   pkg:
     suffix: zip
+    archive:
+      options: ''
+    deps:
+      - curl
+      - gzip
+      - unzip
 
 MacOS:
   flavour: mac
   identity:
-    rootuser: {{ macos_rootuser | d('') }}
-    rootgroup: {{ macos_rootgroup | d('') }}
-    user: {{ macos_rootuser | d('') }}
+    rootuser: {{ rootuser | d('') }}
+    rootgroup: {{ rootgroup | d('') }}
+    user: {{ rootuser | d('') }}
   command: /idea
   environ_file: /etc/defaults/intellij.sh
   dir:
@@ -41,4 +51,4 @@ MacOS:
     suffix : dmg
   shortcut:
     install: false
-    file: /Users/{{ macos_rootuser | d('') }}/Intellij
+    file: /Users/{{ rootuser | d('') }}/Intellij
