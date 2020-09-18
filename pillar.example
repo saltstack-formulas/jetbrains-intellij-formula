@@ -3,7 +3,7 @@
 ---
 intellij:
   edition: C       # community
-  # flavour: linuxWithoutJBR  # linux
+  # flavour: linuxWithoutJBR  # linux, mac, windowsZip, windows
   environ:
     a: b
   pkg:
