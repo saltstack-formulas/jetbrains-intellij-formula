@@ -18,14 +18,14 @@
 {%- endif %}
 
 Windows:
-  flavour: windowsZip
+  flavour: windowsZip    # windows (setup.exe)
   identity:
     rootuser: {{ rootuser | d('') }}
-  command: bin\\idea.exe
+  command: bin\idea64.exe
   dir:
     archive: C:\Program files\Jetbrains
     tmp: C:\temp\jetbrainstmp
-    homes: C:\\Users
+    homes: C:\Users
   pkg:
     suffix: zip
     archive:

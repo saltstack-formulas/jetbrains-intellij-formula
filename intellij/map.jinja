@@ -22,14 +22,15 @@
 {%- set jdata = salt['cmd.run']('curl -s -L "{0}{1}"'.format(i.pkg.uri, pcode))|load_yaml %}
 {%- do i.update({ 'version': jdata[ pcode ][0]['version'] }) %}
 
-{%- set dirname = 'intellij-%s-%s'|format( edition, i.version) %}
+{%- set dirname = 'Intellij-%s-%s'|format( edition, i.version) %}
 {%- set url = jdata[ pcode ][0]['downloads'][ i.flavour ]['link'] %}
-{%- set hash = salt['cmd.run']('curl -L -s "{0}"'.format( jdata[ pcode ][0]['downloads'][ i.flavour ]['checksumLink'])).split(' ')[0] %}  # noqa 204
+{%- set hash = salt['cmd.run']('curl -Ls "{0}"'.format( jdata[ pcode ][0]['downloads'][ i.flavour ]['checksumLink'])).split(' ')[0] %}  # noqa 204
 
+{%- do i.update({'dirname': dirname}) %}
 {%- if i.pkg.use_upstream_archive %}
-    {%- set d = '\\' if grains.os == 'Windows' else '/' %}
-    {%- do i.dir.update({'path': i.dir.archive ~ d ~ dirname }) %}
-    {%- do i.pkg.archive.update({'name': i.dir.archive ~ d ~ dirname, 'source': url, 'source_hash': hash }) %}
+    {%- set div = '\\' if grains.os == 'Windows' else '/' %}
+    {%- do i.dir.update({'path': i.dir.archive ~ div ~ dirname }) %}
+    {%- do i.pkg.archive.update({'name': i.dir.archive ~ div ~ dirname, 'source': url, 'source_hash': hash }) %}
 {%- endif %}
 {%- if i.pkg.use_upstream_macapp %}
     {%- do i.dir.update({'path': '/Applications' }) %}
