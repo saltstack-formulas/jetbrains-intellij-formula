@@ -2,6 +2,16 @@
 Changelog
 =========
 
+`1.2.0 <https://github.com/saltstack-formulas/jetbrains-intellij-formula/compare/v1.1.0...v1.2.0>`_ (2020-09-20)
+--------------------------------------------------------------------------------------------------------------------
+
+Features
+^^^^^^^^
+
+
+* **clean:** add windows support (\ `06d319e <https://github.com/saltstack-formulas/jetbrains-intellij-formula/commit/06d319e98d4dc36ab2be4a8d07ab57145a9acdf4>`_\ )
+* **windows:** shortcut support (\ `b0e69cb <https://github.com/saltstack-formulas/jetbrains-intellij-formula/commit/b0e69cb9b3b4667ee57c2f32f3ae9d7f5a1a95ad>`_\ )
+
 `1.1.0 <https://github.com/saltstack-formulas/jetbrains-intellij-formula/compare/v1.0.2...v1.1.0>`_ (2020-09-20)
 --------------------------------------------------------------------------------------------------------------------
 
