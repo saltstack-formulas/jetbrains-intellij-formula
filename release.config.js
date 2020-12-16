@@ -1,5 +1,6 @@
 module.exports = {
   branch: 'master',
+  repositoryUrl: 'https://github.com/saltstack-formulas/jetbrains-intellij-formula',
   plugins: [
       ['@semantic-release/commit-analyzer', {
         preset: 'angular',
