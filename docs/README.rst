@@ -1,5 +1,3 @@
-.. _readme:
-
 intellij-formula
 ================
 
@@ -63,7 +61,7 @@ manages Intellij configuration file and then
 configures the development environment.
 
 ``intellij.archive``
-^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
 
 This state will install Intellij from archive only.
 
