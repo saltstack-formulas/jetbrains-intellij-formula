@@ -3,7 +3,7 @@
 ---
 intellij:
   edition: C       # community
-  flavour: linuxWithoutJBR
+  flavour: linux
   environ:
     a: b
   identity:

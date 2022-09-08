@@ -6,7 +6,7 @@ intellij:
   release: latest
   version: latest
   edition: C       # community or U (ultimate)
-  flavour: linuxWithoutJBR
+  flavour: linux
 
   command: /bin/idea.sh
   config_file: null
